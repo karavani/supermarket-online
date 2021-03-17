@@ -1,0 +1,65 @@
+const connection = require("./connection-wrapper");
+let ErrorType = require("./../errors/error-type");
+let ServerError = require("./../errors/server-error");
+
+async function login(user) {
+    let sql = `SELECT 
+                    *
+                FROM
+                    supermarket.users
+                WHERE
+                    email = ?
+                        AND password = ?;`
+
+    let parameters = [user.userName, user.password];
+    let usersLoginResult;
+    try {
+        usersLoginResult = await connection.executeWithParameters(sql, parameters);
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, JSON.stringify(user), e);
+    }
+
+    // A functional (!) issue which means - the userName + password do not match
+    if (usersLoginResult == null || usersLoginResult.length == 0) {
+        throw new ServerError(ErrorType.UNAUTHORIZED);
+    }
+
+    return usersLoginResult[0];
+}
+
+async function addUser(user) {
+    let sql = `INSERT INTO users (firstName, lastName, email, personalID, password, city, address, userType)
+                    values(?,?,?,?,?,?,?,?);`;
+    let parameters = [user.firstName, user.lastName, user.email, user.id, user.password,
+    user.city, user.address, "customer"];
+    try {
+        await connection.executeWithParameters(sql, parameters);
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
+    }
+}
+
+async function isUserExistByEmail(email) {
+    let sql = "SELECT email FROM users where email = ? ";
+    console.log(email);
+    let parameters = [email]
+    try {
+        let isUserNameExists = await connection.executeWithParameters(sql, parameters);
+        if (isUserNameExists == null || isUserNameExists.length == 0) {
+            return false;
+        }
+        return true;
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
+    }
+}
+
+
+module.exports = {
+    addUser,
+    isUserExistByEmail,
+    login
+};

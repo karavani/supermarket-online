@@ -1,0 +1,29 @@
+
+<div class="regiterContainer">
+    
+    
+    <form #regiterForm="ngForm" [formGroup]="regiterFormGroup" (submit)="regiterPart1()">
+        <h1><span class="step">1</span> - 2 - <i class="fas fa-check"></i></h1>
+
+        <input type="number" placeholder="User ID" name="id" [formControl]="idFormControl"><br>
+        <span class="errorMessage" *ngIf="idFormControl.errors?.required && idFormControl.touched"><i class="fas fa-exclamation-triangle"></i> id required</span><br>
+
+        <input type="text" placeholder="User email" name="email" [formControl]="emailFormControl"><br>
+        
+        <span class="errorMessage" *ngIf="emailFormControl.errors?.required && emailFormControl.touched"><i class="fas fa-exclamation-triangle"></i> email required</span>
+        <span class="errorMessage" *ngIf="emailFormControl.errors?.pattern && emailFormControl.touched"><i class="fas fa-exclamation-triangle"></i> email not valid</span><br>
+
+        <input type="password" placeholder="Password" name="password" [formControl]="passwordFormControl"><br>
+        <span class="errorMessage" *ngIf="passwordFormControl.invalid && passwordFormControl.touched"><i class="fas fa-exclamation-triangle"></i> Missing password</span>
+        <span class="errorMessage" *ngIf="passwordFormControl.errors?.minlength && passwordFormControl.dirty"><i class="fas fa-exclamation-triangle"></i> password too weak</span>
+        <span class="errorMessage" *ngIf="passwordFormControl.errors?.maxlength && passwordFormControl.dirty"><i class="fas fa-exclamation-triangle"></i> password too large</span><br>
+
+        <input type="password" placeholder="Password Confirm" name="passwordConfirm" [formControl]="passwordConfirmFormControl"><br>
+        <span class="errorMessage" *ngIf="passwordConfirmFormControl.invalid && passwordConfirmFormControl.touched"><i class="fas fa-exclamation-triangle"></i> password mismatch</span> <br>
+
+
+        <button [disabled]="regiterForm.form.invalid">next <i class="fas fa-arrow-right"></i></button>
+        <a routerLink="/login">cancel</a>
+    </form>
+
+</div>

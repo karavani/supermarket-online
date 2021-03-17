@@ -1,0 +1,18 @@
+<div class="loginContainer">
+    <i class="fas fa-user-alt"></i>
+
+
+    <form #loginForm="ngForm" [formGroup]="loginFormGroup" (submit)="login()">
+        <input type="text" placeholder="User name" name="username" [formControl]="userNameFormControl"><br>
+
+        <span *ngIf="userNameFormControl.errors?.required && userNameFormControl.touched">Invalid username</span><br>
+        <span *ngIf="userNameFormControl.errors?.pattern && userNameFormControl.touched">email not valid</span><br>
+
+        <input type="password" placeholder="Password" name="password" [formControl]="passwordFormControl"><br>
+        <span *ngIf="passwordFormControl.invalid && passwordFormControl.touched">Missing password</span> <br>
+
+        <button [disabled]="loginForm.form.invalid">sign in</button>
+        <a routerLink="/register">sign up</a>
+    </form>
+
+</div>

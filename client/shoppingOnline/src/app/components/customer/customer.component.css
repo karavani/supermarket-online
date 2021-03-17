@@ -1,0 +1,16 @@
+main{
+    min-width: 70%;
+    flex-direction: column;
+}
+aside{
+    min-width: 30%;
+    background-color: rgb(168, 57, 57);
+}
+section{
+    min-width: 100%;
+    min-height: 100%;
+    display: flex;
+}
+.visible{
+    min-width: 0%;
+}

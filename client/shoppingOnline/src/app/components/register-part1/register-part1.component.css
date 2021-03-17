@@ -1,0 +1,142 @@
+button[disabled]{
+border: 1px solid #c7c7c7;
+background-color: #cccccc;
+color: #9b9b9b;
+}
+button:hover[disabled]{
+cursor: auto;
+}
+
+button{
+width: 150px;
+font-size: large;
+margin: 10px;
+padding : 10px;  
+}
+button:hover{
+cursor: pointer;
+}
+input {
+width: 250px;
+font-size: large;
+margin: 10px;
+padding : 10px;    
+border: black 1px solid;
+
+/* Round corners button */
+border-radius: 25px;
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+input:hover{
+box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+div{
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: sans-serif;
+padding: 1rem;
+}
+form{
+column-span: all;
+}
+
+h1{
+    color: gray;
+    font-family: 'Akaya Telivigala', cursive;
+}
+.step{
+    color: rgb(0, 0, 0);
+    font-size: larger;
+}
+.registerContainer{
+margin-top: 10%;
+}
+
+.errorMessage{
+	animation-name: slideDown;
+	-webkit-animation-name: slideDown;	
+    opacity: 0.7;
+	animation-duration: 1s;	
+	-webkit-animation-duration: 1s;
+	animation-timing-function: ease;	
+	-webkit-animation-timing-function: ease;	
+	margin: auto;
+	padding: 7px 15px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+    max-width: 460px;
+    color: #D8000C;
+    text-shadow: #FFBABA 2px 10px 2px;
+}
+
+@keyframes slideDown {
+	0% {
+        opacity:0;
+		transform: translateY(-100%);
+	}
+	50%{
+		transform: translateY(8%);
+	}
+	65%{
+		transform: translateY(-4%);
+	}
+	80%{
+		transform: translateY(4%);
+	}
+	95%{
+		transform: translateY(-2%);
+	}			
+	100% {
+        opacity:0.7;
+		transform: translateY(0%);
+	}		
+}
+
+@-webkit-keyframes slideDown {
+	0% {
+        opacity:0;
+		-webkit-transform: translateY(-100%);
+	}
+	50%{
+		-webkit-transform: translateY(8%);
+	}
+	65%{
+		-webkit-transform: translateY(-4%);
+	}
+	80%{
+		-webkit-transform: translateY(4%);
+	}
+	95%{
+		-webkit-transform: translateY(-2%);
+	}			
+	100% {
+        opacity:1;
+		-webkit-transform: translateY(0%);
+	}	
+}
+@keyframes fadeIn {
+    0% {opacity:0;}
+    70% {opacity:0.7;}
+    }
+    
+    @-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    70% {opacity:0.7;}
+    }
+    
+    @-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    70% {opacity:0.7;}
+    }
+    
+    @-o-keyframes fadeIn {
+    0% {opacity:0;}
+    70% {opacity:0.7;}
+    }
+    
+    @-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    70% {opacity:0.7;}
+    }
