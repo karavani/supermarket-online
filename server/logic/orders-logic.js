@@ -6,8 +6,17 @@ async function getOrdersNumber() {
     return response;
 }
 
+async function addNewOrder(newOrderDetails) {
+    let response = await ordersDao.addNewOrder(newOrderDetails);
+    return response;
+}
 
-
+async function updateOrder(order) {
+    let response = await ordersDao.updateOrder(order);
+    return response;
+}
 module.exports = {
-    getOrdersNumber
+    getOrdersNumber,
+    addNewOrder,
+    updateOrder
 };

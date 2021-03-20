@@ -3,6 +3,8 @@ const cors = require("cors");
 const usersController = require("./controllers/users-controller");
 const productsController = require("./controllers/products-controller");
 const ordersController = require("./controllers/orders-controller");
+const cartsController = require("./controllers/carts-controller");
+
 
 
 const errorHandler = require("./errors/error-handler");
@@ -18,6 +20,8 @@ server.use(loginFilter());
 server.use("/users", usersController);
 server.use("/products", productsController);
 server.use("/orders", ordersController);
+server.use("/carts", cartsController);
+
 
 
 
