@@ -14,7 +14,7 @@ async function getOrdersNumber() {
 }
 
 
-async function addNewOrder(newOrderDetails) {
+async function updateOrder(order) {
     let sql = `UPDATE orders set 
                     totalPrice = ?, 
                     cityToDeliver = ?,
@@ -23,8 +23,8 @@ async function addNewOrder(newOrderDetails) {
                     orderDate = ?,
                     CVV = ?
                 WHERE orderID = ?;`;
-    let parameters = [newOrderDetails.totalPrice, newOrderDetails.cityToDeliver, newOrderDetails.addressToDeliver,
-    newOrderDetails.dateToDeliver, newOrderDetails.orderDate, newOrderDetails.CVV, newOrderDetails.orderID];
+    let parameters = [order.totalPrice, order.cityToDeliver, order.addressToDeliver,
+    order.dateToDeliver, order.orderDate, order.CVV, order.orderID];
     try {
         await connection.executeWithParameters(sql, parameters);
     }
@@ -33,9 +33,55 @@ async function addNewOrder(newOrderDetails) {
     }
 };
 
+async function addNewOrder(newOrderDetails) {
+    let sql = `INSERT INTO orders (customerID,cartID, totalPrice, cityToDeliver, addressToDeliver, dateToDeliver, orderDate, CVV) values (?,?,?,?,?,?,?,?);`;
+    let parameters = [newOrderDetails.customerID, newOrderDetails.cartID, newOrderDetails.totalPrice, newOrderDetails.cityToDeliver, newOrderDetails.addressToDeliver,
+    newOrderDetails.dateToDeliver, new Date(), newOrderDetails.CVV];
+    try {
+        await connection.executeWithParameters(sql, parameters);
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
+    }
+};
 
+async function getOrderDateByCartID(cartID) {
+    let sql = `SELECT 
+                    orderDate AS lastPurchase
+                FROM
+                    supermarket.orders
+                WHERE
+                    cartID = ?;`;
+    let parameters = [cartID];
+    try {
+        return await connection.executeWithParameters(sql, parameters);
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
+    }
+}
+
+async function getOrdersBusyDays() {
+    let sql = `SELECT
+                    dateToDeliver
+                FROM
+                    orders
+                GROUP BY
+                    dateToDeliver
+                HAVING 
+                    COUNT(*) = 3;`;
+    try {
+        return await connection.execute(sql);
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
+    }
+}
 
 module.exports = {
     getOrdersNumber,
+    updateOrder,
+    getOrderDateByCartID,
+    getOrdersBusyDays,
     addNewOrder
 };

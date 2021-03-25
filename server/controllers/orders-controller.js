@@ -29,7 +29,7 @@ server.put("/", async (request, response, next) => {
     }
 });
 
-// GET http://localhost:3001/products/number
+// GET http://localhost:3001/orders/number
 server.get("/number", async (request, response, next) => {
 
     try {
@@ -41,4 +41,15 @@ server.get("/number", async (request, response, next) => {
     }
 });
 
+// GET http://localhost:3001/orders/
+server.get("/", async (request, response, next) => {
+    //  Three Orders limited Per Day = busy Day
+    try {
+        let busyDays = await ordersLogic.getOrdersBusyDays();
+        response.json(busyDays);
+    }
+    catch (error) {
+        return next(error);
+    }
+});
 module.exports = server;

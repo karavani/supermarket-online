@@ -14,8 +14,19 @@ async function getAllProductsByCategory(id) {
     }
 }
 
+
 async function getAllProducts() {
     let sql = `SELECT * from products;`;
+    try {
+        return await connection.execute(sql);
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
+    }
+}
+
+async function getAllCategories() {
+    let sql = `SELECT * from categories;`;
     try {
         return await connection.execute(sql);
     }
@@ -39,5 +50,6 @@ async function getProductsNumber() {
 module.exports = {
     getAllProducts,
     getAllProductsByCategory,
+    getAllCategories,
     getProductsNumber
 };

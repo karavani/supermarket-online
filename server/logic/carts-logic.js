@@ -5,6 +5,18 @@ async function creatNewCart(customerID) {
     return response;
 }
 
+async function getCartStatus(cartID) {
+    let response = await cartsDao.getCartStatus(cartID);
+    return response;
+}
+
+async function deleteAllCartItems(cartID) {
+    let response = await cartsDao.deleteAllCartItems(cartID);
+    return response;
+}
+
 module.exports = {
-    creatNewCart
+    creatNewCart,
+    getCartStatus,
+    deleteAllCartItems
 };

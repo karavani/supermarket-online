@@ -7,6 +7,12 @@ async function getAllProducts() {
     return response;
 }
 
+async function getAllCategories() {
+    let response = await productsDao.getAllCategories();
+    return response;
+}
+
+
 async function getProductsNumber() {
     let response = await productsDao.getProductsNumber();
     return response;
@@ -21,5 +27,6 @@ async function getAllProductsByCategory(id) {
 module.exports = {
     getAllProducts,
     getAllProductsByCategory,
+    getAllCategories,
     getProductsNumber
 };

@@ -6,8 +6,34 @@ let ServerError = require("./../errors/server-error");
 async function creatNewCart(customerID) {
     let sql = `INSERT INTO supermarket.cart (dateOfCreation, customerID) VALUES (?, ?);`;
     let parameters = [new Date(), customerID];
+    let cartID;
     try {
-        await connection.executeWithParameters(sql, parameters);
+        return cartID = await connection.executeWithParameters(sql, parameters);
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
+    }
+};
+
+async function getCartStatus(cartID) {
+    let sql = `SELECT status FROM supermarket.cart where cartID = ?;`;
+    let parameters = [cartID];
+    let cartStatus;
+    try {
+        return cartStatus = await connection.executeWithParameters(sql, parameters);
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
+    }
+};
+
+async function deleteAllCartItems(cartID) {
+    let sql = `DELETE FROM supermarket.cartitem 
+               WHERE
+                   cartID = ?;`;
+    let parameters = [cartID];
+    try {
+        return await connection.executeWithParameters(sql, parameters);
     }
     catch (e) {
         throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
@@ -16,5 +42,7 @@ async function creatNewCart(customerID) {
 
 
 module.exports = {
-    creatNewCart
+    creatNewCart,
+    getCartStatus,
+    deleteAllCartItems
 };

@@ -38,5 +38,17 @@ server.post("/", async (request, response, next) => {
 
 });
 
+server.get("/:id", async (request, response, next) => {
+
+    let customerID = request.params.id;
+    try {
+        let resulte = await usersLogic.getCustomerLastCartOrPurchase(customerID);
+        response.json(resulte);
+    }
+    catch (error) {
+        return next(error);
+    }
+});
+
 
 module.exports = server;

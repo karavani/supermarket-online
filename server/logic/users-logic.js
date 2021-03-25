@@ -1,4 +1,6 @@
 const usersDao = require('../dao/users-dao');
+const ordersLogic = require('../logic/orders-logic');
+
 let ServerError = require("../errors/server-error");
 let ErrorType = require("../errors/error-type");
 const crypto = require("crypto");
@@ -45,8 +47,21 @@ async function login(user) {
     return response;
 }
 
+async function getCustomerLastCartOrPurchase(cartID) {
+    let response = await usersDao.getCustomerLastCartOrPurchase(cartID);
+    if (response == null) {
+        return response;
+    }
+    if (response.status == 0) {
+        return response;
+    }
+    if (response.status == 1) {
+        return ordersLogic.getOrderDateByCartID(response.cartID);
+    }
+}
 
 module.exports = {
     addUser,
+    getCustomerLastCartOrPurchase,
     login
 };

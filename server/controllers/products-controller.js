@@ -19,6 +19,19 @@ server.get("/", async (request, response, next) => {
     }
 });
 
+// GET http://localhost:3001/products/categories
+server.get("/categories", async (request, response, next) => {
+
+    try {
+        let categories = await productsLogic.getAllCategories();
+        response.json(categories);
+    }
+    catch (error) {
+        return next(error);
+    }
+});
+
+
 // GET http://localhost:3001/products/number
 server.get("/number", async (request, response, next) => {
 
