@@ -7,8 +7,6 @@ const cartsController = require("./controllers/carts-controller");
 const cartItemsController = require("./controllers/cart-items-controller");
 
 
-
-
 const errorHandler = require("./errors/error-handler");
 const loginFilter = require('./middleware/login-filter');
 const server = express();

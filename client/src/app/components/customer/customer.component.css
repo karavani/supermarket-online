@@ -14,3 +14,23 @@ section{
 .visible{
     min-width: 0%;
 }
+.topContainer{
+    display: block;
+    width: 100%;
+    padding: 2px;
+    margin: 1px;
+}
+.mainContainer{
+    display: flex;
+    flex-wrap: wrap; 
+    align-items: center;
+    padding: 10px;
+    justify-content: center;
+}
+.productCard{
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    padding: 2px;
+    margin: 3px;
+}

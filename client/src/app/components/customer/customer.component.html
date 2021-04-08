@@ -1,8 +1,21 @@
 <section>
     <aside id="menu">
-        <button></button><app-menu></app-menu>
+        <button></button>
+        <app-menu></app-menu>
     </aside>
     <main>
-        <p>customer works!</p>
-    </main>
+        <div class="topContainer">
+            <button (click)="getAllProducts()">All products</button>
+            <button *ngFor="let category of categories"
+                (click)="getProductsByCategory(category.categoryID)">{{category.categoryName}}</button>
+        </div>
+        <div class="mainContainer">
+            <div class="productCard" *ngFor="let product of products">
+                <app-product-card productName={{product.productName}} price={{product.price}}₪
+                    imageURL={{product.imageURL}} (childEvent)=openModal(product)></app-product-card>
+                </div>
+            </div>
+            
+        </main>
+        <app-modal #modal></app-modal>
 </section>

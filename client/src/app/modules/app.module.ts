@@ -9,7 +9,7 @@ import { MenuComponent } from '../components/menu/menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from '../components/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AboutComponent } from '../components/about/about.component';
 import { GeneralInfoComponent } from '../components/general-info/general-info.component';
 import { RegisterComponent } from '../components/register/register.component';
@@ -18,6 +18,11 @@ import { RegisterPart2Component } from '../components/register-part2/register-pa
 import { CustomerComponent } from '../components/customer/customer.component';
 import { AdminModule } from './admin.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthenticationInterceptor } from '../interceptors/AuthenticationInterceptor';
+import { ProductsService } from '../services/ProductsService';
+import { UserService } from '../services/UserService';
+import { ProductCardComponent } from '../components/product-card/product-card.component';
+import { ModalComponent } from '../components/modal/modal';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RegisterComponent,
     RegisterPart1Component,
     RegisterPart2Component,
-    CustomerComponent
+    CustomerComponent,
+    ProductCardComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +48,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [UserService
+    , ProductsService
+    , { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }
+  ],
   bootstrap: [LayoutComponent]
 })
 export class AppModule { }
