@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { StateService } from 'src/app/services/StateService';
 import { UserService } from 'src/app/services/UserService';
 
@@ -19,7 +20,7 @@ export class RegisterPart2Component implements OnInit {
   public lastNameFormControl: FormControl;
 
 
-  constructor(public stateService: StateService, usersService: UserService) {
+  constructor(public stateService: StateService, usersService: UserService, private router: Router) {
     this.usersService = usersService;
     this.city = null;
   }
@@ -37,7 +38,8 @@ export class RegisterPart2Component implements OnInit {
     console.log(this.stateService.newUser);
     const observable = this.usersService.createUser(this.stateService.newUser);
     observable.subscribe(() => {
-      alert("yayy! user created succesfully")
+      alert("yayy! user created succesfully");
+      this.router.navigate(["/home"]);
     }, serverErrorResponse => { // Reaching here means that the server had failed
       // serverErrorResponse is the object returned from the ExceptionsHandler
       alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.message);

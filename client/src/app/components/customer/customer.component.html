@@ -5,17 +5,17 @@
     </aside>
     <main>
         <div class="topContainer">
-            <button (click)="getAllProducts()">All products</button>
-            <button *ngFor="let category of categories"
-                (click)="getProductsByCategory(category.categoryID)">{{category.categoryName}}</button>
+            <a id="allProducts" (click)="getAllProducts()">All products</a>
+            <a *ngFor="let category of categories"
+             (click)="getProductsByCategory(category.categoryID)">{{category.categoryName}}</a>
         </div>
         <div class="mainContainer">
             <div class="productCard" *ngFor="let product of products">
                 <app-product-card productName={{product.productName}} price={{product.price}}₪
-                    imageURL={{product.imageURL}} (childEvent)=openModal(product)></app-product-card>
-                </div>
+                    imageURL={{product.imageURL}} btnValue="add to cart" (childEvent)=openModal(product)></app-product-card>
             </div>
-            
-        </main>
-        <app-modal #modal></app-modal>
+        </div>
+
+    </main>
+    <app-modal #modal></app-modal>
 </section>

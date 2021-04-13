@@ -17,6 +17,8 @@ export class ProductCardComponent implements OnInit {
   price: number;
   @Input()
   imageURL: string;
+  @Input()
+  btnValue: string;
 
   // The event name the parent should hook to
   @Output() childEvent = new EventEmitter<string>();

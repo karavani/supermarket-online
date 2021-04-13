@@ -4,7 +4,10 @@ export class Product {
         public productName?: string,
         public categoryID?: number,
         public price?: number,
-        public imageURL?: string
+        public imageURL?: string,
+        public quantity?: number,
+        public totalPrice?: number,
+        public cartID?: number
     ) { }
 
 }

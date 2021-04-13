@@ -1,12 +1,15 @@
 const cartsLogic = require('../logic/carts-logic');
 const express = require("express");
+
+const cache = require("./cache-controller");
 const server = express();
 
 server.use(express.json());
 
 server.post("/", async (request, response, next) => {
 
-    let customerID = request.body.id;
+    let customerID = cache.extractUserDataFromCache(request).id
+    console.log("customerID controller: ", customerID);
     try {
         let cartID = await cartsLogic.creatNewCart(customerID);
         response.json(cartID.insertId);

@@ -15,7 +15,20 @@ async function addNewItemToCart(cartItem) {
 };
 
 async function getCartItems(cartID) {
-    let sql = `SELECT * FROM supermarket.cartitem where cartID = ?;`;
+    let sql = `SELECT 
+                    p.productName,
+                    p.price,
+                    p.imageURL,
+                    c.itemID,
+                    c.productID,
+                	quantity,
+                    totalPrice,
+                    cartID
+                FROM
+                    supermarket.cartitem c
+                        JOIN
+                    products p ON p.productID = c.productID
+                    where cartID = ?;`;
     let parameters = [cartID];
     let cartItems;
     try {

@@ -1,1 +1,6 @@
 <p>menu works!</p>
+
+<div *ngFor= "let item of this.cartItemsService.cartItems">
+    <app-product-card productName={{item.productName}} price={{item.totalPrice}}₪
+    imageURL={{item.imageURL}} btnValue="x"></app-product-card>
+</div>

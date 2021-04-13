@@ -11,7 +11,7 @@ async function login(user) {
                     email = ?
                         AND password = ?;`
 
-    let parameters = [user.userName, user.password];
+    let parameters = [user.email, user.password];
     let usersLoginResult;
     try {
         usersLoginResult = await connection.executeWithParameters(sql, parameters);

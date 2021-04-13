@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Category } from 'src/app/models/Category';
 import { Product } from 'src/app/models/Product';
 import { ProductsService } from 'src/app/services/ProductsService';
@@ -13,12 +13,13 @@ export class CustomerComponent implements OnInit {
 
   public categories: Category[];
   public products: Product[];
-
+  public element:HTMLElement = document.getElementById('allProducts') as HTMLElement;
   constructor(private productsService: ProductsService) {
     this.categories = [];
     this.products = [];
 
   }
+  @ViewChild('allProducts', {static: false}) allProducts: ElementRef;
 
   addToCart(productID: number) {
     console.log(productID);
@@ -50,6 +51,7 @@ export class CustomerComponent implements OnInit {
 
 
   ngOnInit(): void {
+    document.getElementById("allProducts").click()
     let observable = this.productsService.getAllCategories();
     observable.subscribe(response => {
       console.log(response);
@@ -57,8 +59,6 @@ export class CustomerComponent implements OnInit {
     }, error => {
       alert('Failed to get categories ' + JSON.stringify(error));
     });
-    this.getAllProducts();
   }
-
 
 }
