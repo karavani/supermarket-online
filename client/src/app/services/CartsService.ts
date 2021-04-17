@@ -18,5 +18,8 @@ export class CartsService {
     public creatNewCart(): Observable<number> {
         return this.http.post<number>("http://localhost:3001/carts", null);
     }
+    public deleteAllCartItems(cartID: number) {
+        return this.http.delete("http://localhost:3001/carts/" + cartID);
+    }
 
 }

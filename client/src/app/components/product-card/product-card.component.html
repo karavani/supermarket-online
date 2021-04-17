@@ -1,5 +1,5 @@
 
-<div class="top"><img src={{imageURL}} alt=""></div>
-<div class="main"><h3>{{productName}} -- {{price}}</h3><br>
+<div [ngClass]="status ? 'none' : 'top'"><img src={{imageURL}} alt=""></div>
+<div class="main"><h3>{{productName}}{{quantity}} {{price}}</h3><br>
 <button id='moreInfoBtn' (click)="myClick()">{{btnValue}}</button></div>
 

@@ -8,8 +8,8 @@ server.post("/", async (request, response, next) => {
 
     let newCartItem = request.body;
     try {
-        await cartItemsLogic.addNewItemToCart(newCartItem);
-        response.json();
+        let itemID = await cartItemsLogic.addNewItemToCart(newCartItem);
+        response.json(itemID.insertId);
     }
     catch (error) {
         return next(error);

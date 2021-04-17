@@ -1,6 +1,11 @@
 <p>menu works!</p>
-
-<div *ngFor= "let item of this.cartItemsService.cartItems">
-    <app-product-card productName={{item.productName}} price={{item.totalPrice}}₪
-    imageURL={{item.imageURL}} btnValue="x"></app-product-card>
+<button (click)="deleteAllCartItems()">empty cart</button>
+<div *ngFor="let item of this.cartItemsService.cartItemsMap | keyvalue">
+    <app-product-card #productCard productName={{item.value.productName}} price={{item.value.totalPrice}}₪
+        quantity=*{{item.value.quantity}} imageURL={{item.value.imageURL}} btnValue="x"
+        (childEvent)="deleteItem(item.value.itemID, item.value.productID)"></app-product-card>
+</div>
+<div>
+    <h5>total price: </h5>
+    <button>Checkout</button>
 </div>

@@ -6,7 +6,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./product-card.component.css']
 })
 export class ProductCardComponent implements OnInit {
-
+  @Input()
+  status: boolean = false;
   @Input()
   productID: number;
   @Input()
@@ -19,7 +20,8 @@ export class ProductCardComponent implements OnInit {
   imageURL: string;
   @Input()
   btnValue: string;
-
+  @Input()
+  quantity: string;
   // The event name the parent should hook to
   @Output() childEvent = new EventEmitter<string>();
 

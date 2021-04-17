@@ -7,7 +7,10 @@ export class Product {
         public imageURL?: string,
         public quantity?: number,
         public totalPrice?: number,
-        public cartID?: number
-    ) { }
+        public cartID?: number,
+        public itemID?: number
+    ) {
+        quantity = 1;
+    }
 
 }

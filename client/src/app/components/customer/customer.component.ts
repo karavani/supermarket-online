@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Category } from 'src/app/models/Category';
 import { Product } from 'src/app/models/Product';
+import { CartItemsService } from 'src/app/services/CartItemsService';
 import { ProductsService } from 'src/app/services/ProductsService';
 import { ModalComponent } from '../modal/modal';
 
@@ -13,17 +14,12 @@ export class CustomerComponent implements OnInit {
 
   public categories: Category[];
   public products: Product[];
-  public element:HTMLElement = document.getElementById('allProducts') as HTMLElement;
-  constructor(private productsService: ProductsService) {
+  constructor(private productsService: ProductsService, public cartItemsService: CartItemsService) {
     this.categories = [];
     this.products = [];
 
   }
-  @ViewChild('allProducts', {static: false}) allProducts: ElementRef;
-
-  addToCart(productID: number) {
-    console.log(productID);
-  }
+  @ViewChild('allProducts', { static: false }) allProducts: ElementRef;
 
   getAllProducts() {
     let observable = this.productsService.getAllProducts();
@@ -33,11 +29,20 @@ export class CustomerComponent implements OnInit {
     }, error => {
       alert('Failed to get products ' + JSON.stringify(error));
     });
-  } 
+  }
   @ViewChild('modal', { static: false }) modal: ModalComponent
 
   openModal(product: Product) {
-    this.modal.open(product);
+    let productID = product.productID
+    console.log(productID);
+    if (this.cartItemsService.cartItemsMap.has(productID)) {
+      alert("product already in cart")
+      this.modal.btnSubText = "update quantity";
+      return this.modal.open(this.cartItemsService.cartItemsMap.get(productID));
+    }
+    else {
+      this.modal.open(product);
+    }
   }
   getProductsByCategory(categoryID: number) {
     let observable = this.productsService.getAllProductsByCategory(categoryID);
@@ -48,10 +53,7 @@ export class CustomerComponent implements OnInit {
       alert('Failed to get products ' + JSON.stringify(error));
     });
   }
-
-
-  ngOnInit(): void {
-    document.getElementById("allProducts").click()
+  getAllCategories(){
     let observable = this.productsService.getAllCategories();
     observable.subscribe(response => {
       console.log(response);
@@ -60,5 +62,11 @@ export class CustomerComponent implements OnInit {
       alert('Failed to get categories ' + JSON.stringify(error));
     });
   }
+  
 
+
+  ngOnInit(): void {
+    this.getAllProducts();
+    this.getAllCategories();
+  }
 }

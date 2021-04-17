@@ -11,14 +11,22 @@ import { Product } from '../models/Product';
 })
 export class CartItemsService {
 
-    public cartItems: Product[];
+    public totalPrice: number;
+    public cartItemsMap: Map<number, Product>;
     constructor(private http: HttpClient) {
-    this.cartItems = [];
+        this.cartItemsMap = new Map();
+        this.totalPrice = 0;
     }
     public getCartItems(cartID: number): Observable<Product[]> {
-        return this.http.get<Product[]>("http://localhost:3001/cart-items/"+cartID);
+        return this.http.get<Product[]>("http://localhost:3001/cart-items/" + cartID);
     }
     public addNewItemToCart(product: Product): Observable<Product> {
-        return this.http.post<Product>("http://localhost:3001/cart-items/",product);
+        return this.http.post<Product>("http://localhost:3001/cart-items/", product);
+    }
+    public deleteItemFromCart(itemID: number)  {
+        return this.http.delete("http://localhost:3001/cart-items/"+itemID);
+    }
+    public updateCartItem(item: Product): Observable<Product> {
+        return this.http.put<Product>("http://localhost:3001/cart-items/", item);
     }
 }
