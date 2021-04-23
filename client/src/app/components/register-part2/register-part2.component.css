@@ -182,6 +182,7 @@ display: inline;
 font-size: large;
 }
 
+
 ul.list {
 counter-reset: labels;
 }

@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Category } from 'src/app/models/Category';
 import { Product } from 'src/app/models/Product';
 import { CartItemsService } from 'src/app/services/CartItemsService';
+import { CartsService } from 'src/app/services/CartsService';
 import { ProductsService } from 'src/app/services/ProductsService';
 import { ModalComponent } from '../modal/modal';
 
@@ -12,14 +13,15 @@ import { ModalComponent } from '../modal/modal';
 })
 export class CustomerComponent implements OnInit {
 
+  public isInOrder: boolean;
   public categories: Category[];
   public products: Product[];
-  constructor(private productsService: ProductsService, public cartItemsService: CartItemsService) {
+  constructor(private productsService: ProductsService, public cartItemsService: CartItemsService,
+    public cartsService: CartsService) {
     this.categories = [];
     this.products = [];
-
+    this.isInOrder = false;
   }
-  @ViewChild('allProducts', { static: false }) allProducts: ElementRef;
 
   getAllProducts() {
     let observable = this.productsService.getAllProducts();

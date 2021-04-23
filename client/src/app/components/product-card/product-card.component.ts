@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CartsService } from 'src/app/services/CartsService';
 
 @Component({
   selector: 'app-product-card',
@@ -30,7 +31,7 @@ export class ProductCardComponent implements OnInit {
     this.childEvent.emit("Some string value from child to parent");
   }
 
-  constructor() { }
+  constructor(public cartsService: CartsService) { }
 
   ngOnInit(): void {
   }

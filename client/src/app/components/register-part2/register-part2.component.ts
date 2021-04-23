@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { City } from 'src/app/models/City';
 import { StateService } from 'src/app/services/StateService';
 import { UserService } from 'src/app/services/UserService';
 
@@ -18,14 +19,16 @@ export class RegisterPart2Component implements OnInit {
   public addressFormControl: FormControl;
   public firstNameFormControl: FormControl;
   public lastNameFormControl: FormControl;
+  public cities: Array<string>;
 
 
   constructor(public stateService: StateService, usersService: UserService, private router: Router) {
     this.usersService = usersService;
     this.city = null;
+    this.cities = Object.values(City);
   }
 
-  onItemChange(value) {
+  onItemChange(value: string) {
     console.log(" Value is : ", value);
     this.city = value;
   }

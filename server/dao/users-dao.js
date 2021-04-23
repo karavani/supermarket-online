@@ -84,10 +84,42 @@ async function getCustomerLastCartOrPurchase(customerID) {
     return customerLastCartOrPurchase[0];
 }
 
+async function getCustomerCity(id) {
+    let sql = `SELECT 
+                    city
+                FROM
+                    supermarket.users
+                WHERE
+                    id = ?;`;
+    let parameters = [id];
+    try {
+        return await connection.executeWithParameters(sql, parameters);
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
+    }
+}
 
+async function getCustomerStreetAdress(id) {
+    let sql = `SELECT 
+                    address
+                FROM
+                    supermarket.users
+                WHERE
+                    id = ?;`;
+    let parameters = [id];
+    try {
+        return await connection.executeWithParameters(sql, parameters);
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
+    }
+}
 module.exports = {
     addUser,
     isUserExistByEmail,
     getCustomerLastCartOrPurchase,
-    login
+    login,
+    getCustomerCity,
+    getCustomerStreetAdress
 };

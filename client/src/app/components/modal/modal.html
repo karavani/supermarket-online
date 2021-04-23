@@ -1,4 +1,4 @@
-<div #myModal class="container">
+<div #myModal *ngIf="!isInOrder" class="container">
     <div class="content">
         <button (click)="close()">X</button>
         <div class="top"><img src={{product.imageURL}} #imgCard alt=""></div>
@@ -8,3 +8,4 @@
             <button (click)=addToCart(quantity)>{{btnSubText}}</button>
         </div>
     </div>
+

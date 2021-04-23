@@ -1,9 +1,10 @@
 <section>
     <aside id="menu">
-        <button></button>
+        <button *ngIf="!this.cartsService.isInOrder">מזער</button>
         <app-menu></app-menu>
     </aside>
-    <main>
+    <app-checkout *ngIf="this.cartsService.isInOrder"></app-checkout>
+    <main *ngIf="!this.cartsService.isInOrder">
         <div class="topContainer">
             <a id="allProducts" (click)="getAllProducts()">All products</a>
             <a *ngFor="let category of categories"

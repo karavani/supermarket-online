@@ -14,11 +14,15 @@ export class ModalComponent {
   product: Product
   quantity: number;
   btnSubText: string;
+  isInOrder: boolean;
 
   @ViewChild('myModal', { static: false }) modal: ElementRef;
+  @ViewChild('myModal', { static: false }) receiptModal: ElementRef;
+
   constructor(private cartItemsService: CartItemsService) {
     this.product = new Product;
     this.quantity = 1;
+    this.isInOrder = false;
   }
   addToCart(quantity: number) {
     if (this.cartItemsService.cartItemsMap.has(this.product.productID)) {
@@ -36,22 +40,23 @@ export class ModalComponent {
         console.log(itemID)
         this.product.itemID = +itemID
         this.cartItemsService.cartItemsMap.set(this.product.productID, this.product);
+        this.cartItemsService.totalPrice += this.product.totalPrice
       }, error => {
         alert('Failed to add new item ' + JSON.stringify(error));
       });
     }
-    this.cartItemsService.totalPrice += this.product.totalPrice
     this.close();
   }
 
   updateCartItem(item: Product, quantity: number) {
-    item.quantity = quantity;
+    this.product = item;
     let observable = this.cartItemsService.updateCartItem(item);
     observable.subscribe(() => {
       let cartItem = this.cartItemsService.cartItemsMap.get(item.productID);
       this.cartItemsService.totalPrice -= cartItem.totalPrice
       cartItem.quantity = quantity;
       cartItem.totalPrice = cartItem.price * quantity;
+      this.cartItemsService.totalPrice += cartItem.totalPrice
       this.cartItemsService.cartItemsMap.set(cartItem.productID, cartItem);
     }, (error: any) => {
       alert('Failed to update cart item ' + JSON.stringify(error));
@@ -59,13 +64,22 @@ export class ModalComponent {
   }
 
   open(product: Product) {
+    this.isInOrder = false;
     this.product = product;
     console.log(product)
     this.modal.nativeElement.style.display = 'block';
   }
 
+  public modalOpen(){
+    this.isInOrder = true;
+    this.modal.nativeElement.style.display = 'block';
+  }
+
   close() {
     this.modal.nativeElement.style.display = 'none';
+  }
+  intCloseModal(){
+    this.close();
     this.btnSubText = "add to cart";
     this.quantity = 1;
   }

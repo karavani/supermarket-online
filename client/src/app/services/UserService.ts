@@ -11,8 +11,8 @@ import { UserRegisterDetails } from '../models/UserRegisterDetails';
     providedIn: 'root'
 })
 export class UserService {
-    public userName : string;
-    public userType : string;
+    public userName: string;
+    public userType: string;
     // HttpClient injection (a class variable will be automatically created)
     constructor(private http: HttpClient) {
         // this.http = http;
@@ -25,10 +25,18 @@ export class UserService {
         return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users/login", userLoginDetails);
     }
 
-    public createUser(UserRegisterDetails: UserRegisterDetails): Observable<SuccessfulLoginServerResponse> {        
+    public createUser(UserRegisterDetails: UserRegisterDetails): Observable<SuccessfulLoginServerResponse> {
         return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users", UserRegisterDetails);
     }
-    public getCustomerLastCartOrPurchase(userLoginDetails: UserLoginDetails){
+    public getCustomerLastCartOrPurchase(userLoginDetails: UserLoginDetails) {
         return this.http.post<void>("http://localhost:3001/users", userLoginDetails);
     }
+
+    public getCustomerCityAddress() {
+        return this.http.get("http://localhost:3001/users/city");
+    }
+    public getCustomerStreetAddress() {
+        return this.http.get("http://localhost:3001/users/street");
+    }
+
 }

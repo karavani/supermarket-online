@@ -11,11 +11,13 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private cartsService: CartsService, public cartItemsService: CartItemsService) {
+  public btnSubText: string;
 
+  constructor(public cartsService: CartsService, public cartItemsService: CartItemsService) {
+    this.btnSubText = "checkout";
   }
-@Input()
-quantity: number;
+  @Input()
+  quantity: number;
 
   ngOnInit(): void {
     let cartID = parseInt(sessionStorage.getItem("cartID"));
@@ -23,17 +25,28 @@ quantity: number;
     observable.subscribe(response => {
       response.forEach(item => {
         this.cartItemsService.cartItemsMap.set(item.productID, item);
+        this.cartItemsService.totalPrice += item.totalPrice;
       });
     }, error => {
       alert('Failed to get categories ' + JSON.stringify(error));
     });
   }
 
-
+checkout(){
+  this.cartsService.isInOrder = !this.cartsService.isInOrder;
+  if (this.btnSubText == "checkout"){
+    this.btnSubText = "back to shop";
+  }
+  else{
+    this.btnSubText = "checkout"
+  }
+}
   deleteItem(itemID: number, productID: number) {
     let observable = this.cartItemsService.deleteItemFromCart(itemID);
     console.log(itemID);
     observable.subscribe(() => {
+      let item = this.cartItemsService.cartItemsMap.get(productID);
+      this.cartItemsService.totalPrice -= item.totalPrice;
       this.cartItemsService.cartItemsMap.delete(productID);
     }, error => {
       alert('Failed to get categories ' + JSON.stringify(error));
@@ -44,6 +57,7 @@ quantity: number;
     let cartID = parseInt(sessionStorage.getItem("cartID"));
     let observable = this.cartsService.deleteAllCartItems(cartID);
     observable.subscribe(() => {
+      this.cartItemsService.totalPrice = 0;
       this.cartItemsService.cartItemsMap = new Map();
     }, error => {
       alert('Failed to delete cart contains ' + JSON.stringify(error));

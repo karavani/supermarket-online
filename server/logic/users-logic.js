@@ -60,8 +60,19 @@ async function getCustomerLastCartOrPurchase(cartID) {
     }
 }
 
+async function getCustomerCity(id){
+    let response = await usersDao.getCustomerCity(id);
+    return response[0].city;
+}
+async function getCustomerStreetAdress(id){
+    let response = await usersDao.getCustomerStreetAdress(id);
+    return response[0].address;
+}
+
 module.exports = {
     addUser,
     getCustomerLastCartOrPurchase,
-    login
+    login,
+    getCustomerCity,
+    getCustomerStreetAdress
 };

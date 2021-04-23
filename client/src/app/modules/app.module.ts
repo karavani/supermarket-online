@@ -23,6 +23,7 @@ import { ProductsService } from '../services/ProductsService';
 import { UserService } from '../services/UserService';
 import { ProductCardComponent } from '../components/product-card/product-card.component';
 import { ModalComponent } from '../components/modal/modal';
+import { CheckoutComponent } from '../components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ModalComponent } from '../components/modal/modal';
     CustomerComponent,
     ProductCardComponent,
     ModalComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,7 @@ import { ModalComponent } from '../components/modal/modal';
     FormsModule, ReactiveFormsModule,
     AppRoutingModule, RouterModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [UserService
     , ProductsService

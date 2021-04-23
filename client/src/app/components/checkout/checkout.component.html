@@ -1,0 +1,33 @@
+<p>Order details</p>
+<div>
+    <form #orderForm="ngForm" [formGroup]="orderFormGroup" (submit)="order()">
+        
+        <select (dblclick)="onDblGetCity()"  [formControl]="cityFormControl">
+            <option *ngFor="let city of cities">{{city}}</option>
+        </select><br>
+        
+        <input type="text" placeholder="Street" name="street" (dblclick)="onDblGetStreet()"
+            [formControl]="streetFormControl"><br>
+        <span *ngIf="streetFormControl.errors?.required && streetFormControl.touched">Invalid user email</span><br>
+        <span *ngIf="streetFormControl.errors?.pattern && streetFormControl.touched">email not valid</span><br>
+
+
+        <input #datepicker type="date" [formControl]="dateFormControl"><br>
+        <span *ngIf="dateFormControl.invalid && dateFormControl.touched">Missing date</span> <br>
+
+        <input type="text" placeholder="Credit Card Number" name="creditCard" [formControl]="creditCardFormControl"><br>
+        <span *ngIf="creditCardFormControl.invalid && creditCardFormControl.touched">Missing credit card number</span> <br>
+
+        <button [disabled]="orderForm.form.invalid">Submit</button>
+    </form>
+    <div #myModal class="container">
+        <div class="content">
+            <div class="top">
+                <button (click)="close()">x</button>
+                <h1>Your order completed!</h1>
+            </div>
+            <div class="main"><button (click)="downloadReciept()">click here to download youe receipt</button>
+            </div>
+        </div>
+    </div>
+</div>
