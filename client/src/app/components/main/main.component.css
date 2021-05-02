@@ -1,15 +1,7 @@
 .main-container{
 display: flex;
-margin: 2px;
-justify-content: center;
-justify-content: space-between;
+flex-direction: row;
 transition: height .3s ease-out;
-}
-.login-background,.about-background ,.general-info-background{
-padding: 4px;
-margin: 5px;
-width: 30%;
-min-height: 400px;
 }
 
 i{
@@ -19,7 +11,7 @@ margin: 4px;
 .general-info-background ,.about-info-background, .login-background {
 position: relative;
 width: 33%;
-margin: 5px;
+margin: 4px;
 }
 
 .image {
@@ -57,3 +49,19 @@ left: 50%;
 transform: translate(-50%, -50%);
 -ms-transform: translate(-50%, -50%);
 }
+
+
+  /* On screens that are 600px or less, set the background color to olive */
+  @media screen and (max-width: 768px) {
+    .about-info-background, .login-background,.general-info-background{
+        width: 80%;
+        position: relative;
+    }
+    .main-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        }
+        
+    }

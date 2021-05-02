@@ -1,15 +1,20 @@
 const ordersLogic = require('../logic/orders-logic');
 const express = require("express");
 const server = express();
+const cache = require("./cache-controller");
+
 
 server.use(express.json());
 
 
 server.post("/", async (request, response, next) => {
 
+    let customerID = cache.extractUserDataFromCache(request).id;
+
     let newOrderDetails = request.body;
+    console.log(newOrderDetails);
     try {
-        await ordersLogic.addNewOrder(newOrderDetails);
+        await ordersLogic.addNewOrder(customerID, newOrderDetails);
         response.json();
     }
     catch (error) {

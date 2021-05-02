@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserLoginDetails } from 'src/app/models/UserLoginDetails';
 import { CartsService } from 'src/app/services/CartsService';
 import { UserService } from 'src/app/services/UserService';
+import { BreakpointObserver } from '@angular/cdk/layout';
+
 
 @Component({
     selector: 'app-login',
@@ -11,6 +13,12 @@ import { UserService } from 'src/app/services/UserService';
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+
+    loginForm: FormGroup;
+    minDate = new Date(Date.now())
+    success = false;
+    hide = true;
 
     public loginFormGroup: FormGroup;
     public userNameFormControl: FormControl;
@@ -29,7 +37,8 @@ export class LoginComponent implements OnInit {
     // 1. Member definition
     // 2. Parameter definition
     // 3. this.router = router
-    constructor(usersService: UserService, private router: Router, cartsService: CartsService) {
+    constructor(usersService: UserService, private router: Router, cartsService: CartsService
+        , private formBuilder: FormBuilder, private breakpointObserver: BreakpointObserver) {
         this.userLoginDetails = new UserLoginDetails();
         this.usersService = usersService;
         this.cartsService = cartsService;
@@ -37,10 +46,11 @@ export class LoginComponent implements OnInit {
         this.startShoppingButtonValue = "";
         this.isUserLoggedIn = false;
     }
+
     public login(): void {
 
-        this.userLoginDetails.email = this.userNameFormControl.value;
-        this.userLoginDetails.password = this.passwordFormControl.value;
+        this.userLoginDetails.email = this.userName.value;
+        this.userLoginDetails.password = this.password.value;
 
         // Creating an observable object
         // It looks like an http request had been issued BUT IT DIDN'T
@@ -53,13 +63,16 @@ export class LoginComponent implements OnInit {
 
             sessionStorage.setItem("token", successfulServerRequestData.token + "");
             this.usersService.userType = successfulServerRequestData.userType;
-
+            sessionStorage.setItem("userType", successfulServerRequestData.userType);
+            sessionStorage.setItem("isLoggedIn", "true");
             if (successfulServerRequestData.userType == "customer") {
                 this.isUserLoggedIn = true;
+                sessionStorage.setItem("userName", successfulServerRequestData.name);
                 this.usersService.userName = successfulServerRequestData.name;
                 if (successfulServerRequestData.cart == null) {
                     this.openCartMessage = "welcome " + successfulServerRequestData.name + "!";
                     this.startShoppingButtonValue = "start shopping";
+                    sessionStorage.setItem("lastOpenCartDate", this.openCartMessage);
                     return
                 }
                 if (successfulServerRequestData.cart.status != 1) {
@@ -67,23 +80,29 @@ export class LoginComponent implements OnInit {
                     this.startShoppingButtonValue = "resume shopping";
                     this.cartsService.cartID = successfulServerRequestData.cart.cartID;
                     sessionStorage.setItem("cartID", successfulServerRequestData.cart.cartID.toString());
+                    sessionStorage.setItem("lastOpenCartDate", this.openCartMessage);
                     return
                 }
                 else {
                     this.openCartMessage = "your last purchase was in: " + successfulServerRequestData.cart.dateOfCreation;
                     this.startShoppingButtonValue = "start shopping";
+                    sessionStorage.setItem("lastOpenCartDate", this.openCartMessage);
                     return
                 }
             }
 
             if (successfulServerRequestData.userType == "admin") {
-                this.router.navigate(["/admin"]);
+                sessionStorage.setItem("userName", "Admin");
+                this.usersService.userName = "Admin";
+                return this.router.navigate(["/admin"]);
             }
 
         }, serverErrorResponse => { // Reaching here means that the server had failed
             // serverErrorResponse is the object returned from the ExceptionsHandler
             alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.message);
         });
+        this.success = true;
+
 
     }
 
@@ -97,20 +116,41 @@ export class LoginComponent implements OnInit {
                 alert('Failed to get products ' + JSON.stringify(error));
             });
         }
-        console.log(this.cartsService.cartID);
-        this.router.navigate(["/customer"]);
+        if(sessionStorage.getItem("userType") == "customer"){
+            this.router.navigate(["/customer"]);
+        }
+        else{
+            this.router.navigate(["/admin"]);
+        }
     }
     ngOnInit() {
-        // Initializing form controls with validators
-        //this.userName = new FormControl("Default value doesn't make sense here", [Validators.required, Validators.pattern("^[A-Z]+")]);
-        this.userNameFormControl = new FormControl("", [Validators.required, Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$')]);
-        this.passwordFormControl = new FormControl("", Validators.required);
-
-        // Initializing the from group
-        this.loginFormGroup = new FormGroup({
-            userName: this.userNameFormControl,
-            password: this.passwordFormControl
+        if (sessionStorage.getItem("userType") == "customer" && sessionStorage.getItem("token")) {
+            this.success = true;
+            this.isUserLoggedIn = true;
+            this.startShoppingButtonValue = "resume shopping";
+            this.usersService.userName = sessionStorage.getItem("userName");
+        }
+        if (sessionStorage.getItem("lastOpenCartDate")) {
+            this.openCartMessage = sessionStorage.getItem("lastOpenCartDate");
+        }
+        if (sessionStorage.getItem("userType") == "admin" && sessionStorage.getItem("token")){
+            this.success = true;
+            this.isUserLoggedIn = true;
+            this.startShoppingButtonValue = "Go ahead!";
+        }
+        this.loginForm = this.formBuilder.group({
+            userName: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required]
         });
+        this.loginForm.valueChanges.subscribe(console.log)
     }
-
+    get userName() {
+        return this.loginForm.get('userName');
+    }
+    get password() {
+        return this.loginForm.get('password');
+    }
+    get isMobile() {
+        return this.breakpointObserver.isMatched('(max-width: 767px)');
+    }
 }

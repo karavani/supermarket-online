@@ -40,7 +40,7 @@ export class RegisterPart1Component implements OnInit {
       Validators.required,
       Validators.minLength(6),
       Validators.maxLength(30),
-      Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$')])
+      Validators.email])
     ]),
       this.passwordFormControl = new FormControl("", [Validators.compose([
         Validators.required,
@@ -55,7 +55,7 @@ export class RegisterPart1Component implements OnInit {
     {
       validators: this.password.bind(this)
     }
-
+    
 
     // Initializing the from group
     this.regiterFormGroup = new FormGroup({

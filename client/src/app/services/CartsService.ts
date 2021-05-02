@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CartStatus } from '../models/CartStatus';
 
 
 
@@ -22,6 +23,9 @@ export class CartsService {
     }
     public deleteAllCartItems(cartID: number) {
         return this.http.delete("http://localhost:3001/carts/" + cartID);
+    }
+    public getCartStatus(cartID: number) {
+        return this.http.get<CartStatus>("http://localhost:3001/carts/" + cartID);
     }
 
 }

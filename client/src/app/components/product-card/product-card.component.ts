@@ -23,6 +23,8 @@ export class ProductCardComponent implements OnInit {
   btnValue: string;
   @Input()
   quantity: string;
+  @Input()
+  iClassName: string;
   // The event name the parent should hook to
   @Output() childEvent = new EventEmitter<string>();
 

@@ -1,19 +1,30 @@
 main{
-min-width: 70%;
+width: 70%;
 flex-direction: column;
 }
+main.visible{
+    width: 100%;
+}
+main:not(.visible){
+    width: 70%;
+}
 aside{
-min-width: 30%;
+width: 30%;
+overflow-x: hidden;
 background-color: rgb(168, 57, 57);
+}
+aside.visible{
+animation: open-cart-animation 1s forwards;
+}
+aside:not(.visible){
+animation: close-cart-animation 1s linear forwards;
 }
 section{
 min-width: 100%;
 min-height: 100%;
 display: flex;
 }
-.visible{
-min-width: 0%;
-}
+
 .topContainer{
 display: flex;
 flex-wrap: wrap; 
@@ -21,12 +32,7 @@ align-items: center;
 padding: 10px;
 justify-content: center;
 }
-.radioBtn{
-display: inline-block;
-position: relative;
-margin: 0px;
-flex: 1; 
-}
+
 a{
 display: inline-block;
 margin: 2px;
@@ -40,36 +46,10 @@ border-radius: 6px;
 transition: .2s linear;
 }
 a:hover,
-a:active{
+.visited{
 background-color: #48dbfb;
 color: #fff;
 }
-.radioBtn > input {
-width: 100%;
-height: 60px;
-opacity: 0;
-
-}
-div:last-child label {
-border-right: 0;
-}
-
-input:checked + label {
-background: #d81b60;
-font-weight: 500;
-color: #fff;
-}
-label {
-    position: absolute;
-    top: 0; left: 0;
-    color: #b6b6b6;
-    width: 80px;
-    height: 100%;
-    background: #fff;
-    pointer-events: none;
-    border-right: 1px solid #b6b6b6;
-}
-
 
 
 .mainContainer{
@@ -86,4 +66,22 @@ height: 150px;
 padding: 2px;
 margin: 3px;
 }
+.toggleBtn{
+    float: left;
+    border: none;
+    font-size: large;
+    margin: none;
+}
+.toggleBtn:hover{
+    cursor: pointer;
+}
 
+@keyframes close-cart-animation {
+    from { width: 30%; }
+    to { width: 0; }
+}
+
+@keyframes open-cart-animation {
+    from { width: 0; }
+    to { width: 30%; }
+}

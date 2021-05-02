@@ -7,8 +7,8 @@ const connection = mysql.createConnection({
     host: "localhost", // Computer
     user: "root", // Username
     password: "1234", // Password
-    database: "supermarket", // Database name
-    dateStrings: "date"
+    database: "supermarket" // Database name
+
 });
 
 // Connect to the database: 

@@ -1,55 +1,23 @@
-button[disabled]{
-border: 1px solid #c7c7c7;
-background-color: #cccccc;
-color: #9b9b9b;
+form {
+  display: flex;
+  flex-direction: column;
 }
-button:hover[disabled]{
-cursor: auto;
-}
-
-
-
-button{
-width: 150px;
-font-size: large;
-margin: 10px;
-padding : 10px;  
-}
-button:hover{
-cursor: pointer;
+.parent{
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 
-input[type=text], input[type=date], select {
-width: 250px;
-font-size: large;
-margin: 10px;
-padding : 10px;    
-border: black 1px solid;
-/* Round corners button */
-border-radius: 25px;
-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+:host input{
+  opacity: 1;
 }
-
-input[type=text]:hover , input[type=date]:hover{
-box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
-
-form{
-column-span: all;
-}
-
-
-div{
-display: flex;
-justify-content: center;
-align-items: center;
-font-family: sans-serif;
-padding: 1rem;
-}
-  
 .container {
     display: none;
     position: fixed;
+  
     z-index: 1;
     padding-top: 100px;
     left: 0;
@@ -75,4 +43,9 @@ padding: 1rem;
 h3{
     display: inline-block;
     margin: 0px;
+}
+mat-form-field{
+  width: 150%;
+  font-size: larger;
+  padding: 10px;
 }

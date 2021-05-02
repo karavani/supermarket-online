@@ -12,6 +12,7 @@ export class ModalComponent {
 
   @Input()
   product: Product
+  @Input()
   quantity: number;
   btnSubText: string;
   isInOrder: boolean;
@@ -24,23 +25,30 @@ export class ModalComponent {
     this.quantity = 1;
     this.isInOrder = false;
   }
+  ngOnInit() {
+    this.intCloseModal()
+  }
   addToCart(quantity: number) {
     if (this.cartItemsService.cartItemsMap.has(this.product.productID)) {
       this.updateCartItem(this.product, quantity)
       this.btnSubText = "add to cart";
     }
     else {
-      this.product.quantity = quantity;
-      this.product.totalPrice = this.product.price * quantity;
-      this.product.cartID = parseInt(sessionStorage.getItem("cartID"));
+      let newItem = Object.assign(new Product, this.product)
 
-      let observable = this.cartItemsService.addNewItemToCart(this.product);
+      newItem.quantity = quantity;
+      newItem.totalPrice = newItem.price * quantity;
+      newItem.cartID = parseInt(sessionStorage.getItem("cartID"));
+
+      let observable = this.cartItemsService.addNewItemToCart(newItem);
       observable.subscribe((response) => {
         let itemID = response;
         console.log(itemID)
-        this.product.itemID = +itemID
-        this.cartItemsService.cartItemsMap.set(this.product.productID, this.product);
-        this.cartItemsService.totalPrice += this.product.totalPrice
+        newItem.itemID = +itemID
+        this.cartItemsService.cartItemsMap.set(newItem.productID, newItem);
+        this.cartItemsService.totalPrice += newItem.totalPrice
+        this.quantity = 1;
+
       }, error => {
         alert('Failed to add new item ' + JSON.stringify(error));
       });
@@ -58,6 +66,8 @@ export class ModalComponent {
       cartItem.totalPrice = cartItem.price * quantity;
       this.cartItemsService.totalPrice += cartItem.totalPrice
       this.cartItemsService.cartItemsMap.set(cartItem.productID, cartItem);
+      this.quantity = 1;
+
     }, (error: any) => {
       alert('Failed to update cart item ' + JSON.stringify(error));
     });
@@ -70,17 +80,17 @@ export class ModalComponent {
     this.modal.nativeElement.style.display = 'block';
   }
 
-  public modalOpen(){
+  public modalOpen() {
     this.isInOrder = true;
     this.modal.nativeElement.style.display = 'block';
   }
 
   close() {
+    this.btnSubText = "add to cart";
     this.modal.nativeElement.style.display = 'none';
   }
-  intCloseModal(){
+  intCloseModal() {
     this.close();
-    this.btnSubText = "add to cart";
     this.quantity = 1;
   }
 }

@@ -1,17 +1,18 @@
 <section>
-    <aside id="menu">
-        <button *ngIf="!this.cartsService.isInOrder">מזער</button>
+    <aside id="menu" [ngClass]="{visible : minimise}">
         <app-menu></app-menu>
     </aside>
     <app-checkout *ngIf="this.cartsService.isInOrder"></app-checkout>
-    <main *ngIf="!this.cartsService.isInOrder">
+    <main *ngIf="!this.cartsService.isInOrder" [ngClass]="{visible : !minimise}">
+        <button class="toggleBtn" *ngIf="!this.cartsService.isInOrder" (click)="minimise = !minimise"><i *ngIf="!minimise" class="fas fa-angle-double-right"></i>
+            <i *ngIf="minimise" class="fas fa-angle-double-left"></i><i class="fas fa-shopping-cart"></i></button>
         <div class="topContainer">
-            <a id="allProducts" (click)="getAllProducts()">All products</a>
-            <a *ngFor="let category of categories"
+            <a id="allProducts" (click)="getAllProducts()" [ngClass]="{visited : this.productsService.selectedCategory == 0} ">All products</a>
+            <a *ngFor="let category of categories" [ngClass]="{visited : category.categoryID == this.productsService.selectedCategory} " id="{{category.categoryID}}"
              (click)="getProductsByCategory(category.categoryID)">{{category.categoryName}}</a>
         </div>
         <div class="mainContainer">
-            <div class="productCard" *ngFor="let product of products">
+            <div class="productCard" *ngFor="let product of this.productsService.products">
                 <app-product-card productName={{product.productName}} price={{product.price}}₪
                     imageURL={{product.imageURL}} btnValue="add to cart" (childEvent)=openModal(product)></app-product-card>
             </div>

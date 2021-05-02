@@ -1,5 +1,8 @@
 
-<p>general-info works!</p><i class="fas fa-poll"></i>
+<i class="fas fa-poll"></i>
 
-<p>Available products in our store: {{this.productsNumber}}</p>
-<p>Number of orders in our store: {{this.ordersNumber}}</p>
+<h3>Available products in our store: {{this.productsNumber}}</h3>
+<mat-progress-bar mode="buffer" value="{{this.productsNumber}}"></mat-progress-bar>
+<br>
+<h3>Number of orders in our store: {{this.ordersNumber}}</h3>
+<mat-progress-bar mode="buffer" value="{{this.ordersNumber}}"></mat-progress-bar>

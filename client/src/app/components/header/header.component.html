@@ -1,4 +1,18 @@
+<div class="container">
+    <div class="left" [ngClass]="{hidden : isMobile}">
+    </div>
+    <div class="center" [ngClass]="{centerMobile : isMobile}">
+        <h1><i class="fab fa-opencart"></i> SuperMarket Online</h1>
 
-<h1>SuperMarket Online</h1>
-
-<h5 *ngIf="this.usersService.userName !== '' ">hello {{this.usersService.userName}}!</h5>
+    </div>
+    <div class="right" [ngClass]="{rightMobile : isMobile}">
+        <div *ngIf="this.usersService.userName !== '' ">
+            <h3>hello {{this.usersService.userName}}!</h3>
+            <a href="/home" (click)="logout()">logout</a>
+        </div>
+        <div class="searchContainer">
+            <input #myInput type="text" placeholder="search for products" [(ngModel)]="searchText">
+            <button (click)="search()"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+</div>

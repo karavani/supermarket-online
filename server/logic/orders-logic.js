@@ -1,4 +1,6 @@
 const ordersDao = require('../dao/orders-dao');
+const cartsDao = require('../dao/carts-dao');
+
 
 
 async function getOrdersNumber() {
@@ -6,8 +8,9 @@ async function getOrdersNumber() {
     return response;
 }
 
-async function addNewOrder(newOrderDetails) {
-    let response = await ordersDao.addNewOrder(newOrderDetails);
+async function addNewOrder(customerID, newOrderDetails) {
+    let response = await ordersDao.addNewOrder(customerID, newOrderDetails);
+    await cartsDao.updateCartStatus(newOrderDetails.cartID);
     return response;
 }
 

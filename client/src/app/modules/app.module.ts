@@ -16,7 +16,6 @@ import { RegisterComponent } from '../components/register/register.component';
 import { RegisterPart1Component } from '../components/register-part1/register-part1.component';
 import { RegisterPart2Component } from '../components/register-part2/register-part2.component';
 import { CustomerComponent } from '../components/customer/customer.component';
-import { AdminModule } from './admin.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationInterceptor } from '../interceptors/AuthenticationInterceptor';
 import { ProductsService } from '../services/ProductsService';
@@ -24,6 +23,18 @@ import { UserService } from '../services/UserService';
 import { ProductCardComponent } from '../components/product-card/product-card.component';
 import { ModalComponent } from '../components/modal/modal';
 import { CheckoutComponent } from '../components/checkout/checkout.component';
+
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { AdminComponent } from '../components/admin/admin.component';
+import { ProductManagementComponent } from '../components/product-management/product-management.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +44,7 @@ import { CheckoutComponent } from '../components/checkout/checkout.component';
     MenuComponent,
     LoginComponent,
     AboutComponent,
+    AdminComponent,
     GeneralInfoComponent,
     RegisterComponent,
     RegisterPart1Component,
@@ -41,14 +53,23 @@ import { CheckoutComponent } from '../components/checkout/checkout.component';
     ProductCardComponent,
     ModalComponent,
     CheckoutComponent,
+    ProductManagementComponent,
   ],
   imports: [
     BrowserModule,
-    AdminModule,
     FormsModule, ReactiveFormsModule,
     AppRoutingModule, RouterModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatProgressBarModule
   ],
   providers: [UserService
     , ProductsService

@@ -1,21 +1,18 @@
 section {
     min-height: 100%;
-    border: 1.5px solid black;
+    border: 1px solid black;
     background-color: rgb(233, 235, 241);
     font-family: 'Akaya Telivigala', cursive;
     text-align: center;
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: repeat(12, 1fr); /* 12 columns */
-    grid-template-rows: 15% 85%; /* 3 rows */
+    grid-template-columns: repeat(6, 1fr); /* 12 columns */
+    grid-template-rows: 10% 90%; 
 }
 
-section > * {
-    border: 0.5px solid black;
-}
 
 header {
-    grid-column: span 12;
+    grid-column: span 6;
     /* background-color: #ffffff; */
     color: white;
     background-image: url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/grocery-shopping-concept-foods-with-shopping-bag-royalty-free-image-1585321582.jpg");
@@ -27,8 +24,7 @@ header {
 
 
 main {
-    grid-column: span 12; 
-    min-height: fit-content;  
+    grid-column: span 6; 
     justify-content: center;
     align-items: center;
 

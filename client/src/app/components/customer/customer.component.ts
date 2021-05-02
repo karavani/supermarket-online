@@ -13,21 +13,19 @@ import { ModalComponent } from '../modal/modal';
 })
 export class CustomerComponent implements OnInit {
 
-  public isInOrder: boolean;
+  public minimise: boolean;
   public categories: Category[];
-  public products: Product[];
-  constructor(private productsService: ProductsService, public cartItemsService: CartItemsService,
+  constructor(public productsService: ProductsService, public cartItemsService: CartItemsService,
     public cartsService: CartsService) {
     this.categories = [];
-    this.products = [];
-    this.isInOrder = false;
+    this.minimise = true;
   }
 
   getAllProducts() {
     let observable = this.productsService.getAllProducts();
     observable.subscribe(response => {
-      console.log(response);
-      this.products = response;
+      this.productsService.selectedCategory = 0;
+      this.productsService.products = response;
     }, error => {
       alert('Failed to get products ' + JSON.stringify(error));
     });
@@ -43,19 +41,20 @@ export class CustomerComponent implements OnInit {
       return this.modal.open(this.cartItemsService.cartItemsMap.get(productID));
     }
     else {
-      this.modal.open(product);
+      this.modal.open(Object.assign(new Product,product));
     }
   }
+
   getProductsByCategory(categoryID: number) {
     let observable = this.productsService.getAllProductsByCategory(categoryID);
     observable.subscribe(response => {
-      console.log(response);
-      this.products = response;
+      this.productsService.selectedCategory = categoryID;
+      this.productsService.products = response;
     }, error => {
       alert('Failed to get products ' + JSON.stringify(error));
     });
   }
-  getAllCategories(){
+  getAllCategories() {
     let observable = this.productsService.getAllCategories();
     observable.subscribe(response => {
       console.log(response);
@@ -64,7 +63,7 @@ export class CustomerComponent implements OnInit {
       alert('Failed to get categories ' + JSON.stringify(error));
     });
   }
-  
+
 
 
   ngOnInit(): void {

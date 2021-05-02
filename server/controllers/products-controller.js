@@ -6,6 +6,29 @@ const server = express();
 
 server.use(express.json());
 
+server.post("/", async (request, response, next) => {
+
+    let newProductDetails = request.body;
+    try {
+        await productsLogic.addNewProduct(newProductDetails);
+        response.json();
+    }
+    catch (error) {
+        return next(error);
+    }
+});
+
+server.put("/", async (request, response, next) => {
+
+    let product = request.body;
+    try {
+        await productsLogic.updateProduct(product);
+        response.json();
+    }
+    catch (error) {
+        return next(error);
+    }
+});
 
 // GET http://localhost:3001/products
 server.get("/", async (request, response, next) => {
@@ -32,9 +55,9 @@ server.get("/categories", async (request, response, next) => {
 });
 
 
+
 // GET http://localhost:3001/products/number
 server.get("/number", async (request, response, next) => {
-
     try {
         let numberOfProducts = await productsLogic.getProductsNumber();
         response.json(numberOfProducts);
@@ -44,9 +67,9 @@ server.get("/number", async (request, response, next) => {
     }
 });
 
-// GET http://localhost:3001/products/:id
-server.get("/:id", async (request, response, next) => {
 
+// GET http://localhost:3001/products/category/:id
+server.get("/category/:id", async (request, response, next) => {
     let id = request.params.id;
     try {
         let allProductsByCategory = await productsLogic.getAllProductsByCategory(id);
@@ -57,6 +80,18 @@ server.get("/:id", async (request, response, next) => {
     }
 });
 
+
+// GET http://localhost:3001/products/:productName
+server.get("/:productName", async (request, response, next) => {
+    let productName = request.params.productName;
+    try {
+        let products = await productsLogic.getProductByName(productName)
+        response.json(products);
+    }
+    catch (error) {
+        return next(error);
+    }
+});
 
 
 

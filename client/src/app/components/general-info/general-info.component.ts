@@ -18,12 +18,14 @@ export class GeneralInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     let observable = this.productsService.getAllProductsNumber();
     observable.subscribe(response => {
       this.productsNumber = response[0].productsNumber;
     }, error => {
       alert('Failed to get products number ' + JSON.stringify(error));
     });
+
     observable = this.ordersService.getAllOrdersNumber();
     observable.subscribe(response => {
       this.ordersNumber = response[0].ordersNumber;

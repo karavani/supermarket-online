@@ -12,9 +12,10 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 export class MenuComponent implements OnInit {
 
   public btnSubText: string;
-
+  public searchText: string
   constructor(public cartsService: CartsService, public cartItemsService: CartItemsService) {
     this.btnSubText = "checkout";
+    this.searchText = null;
   }
   @Input()
   quantity: number;
@@ -31,16 +32,21 @@ export class MenuComponent implements OnInit {
       alert('Failed to get categories ' + JSON.stringify(error));
     });
   }
-
-checkout(){
-  this.cartsService.isInOrder = !this.cartsService.isInOrder;
-  if (this.btnSubText == "checkout"){
-    this.btnSubText = "back to shop";
+  searchInCart() {
+    if (this.searchText == "") {
+      this.searchText = null
+    }
+    this.searchText = this.searchText.toLowerCase();
   }
-  else{
-    this.btnSubText = "checkout"
+  checkout() {
+    this.cartsService.isInOrder = !this.cartsService.isInOrder;
+    if (this.btnSubText == "checkout") {
+      this.btnSubText = "back to shop";
+    }
+    else {
+      this.btnSubText = "checkout"
+    }
   }
-}
   deleteItem(itemID: number, productID: number) {
     let observable = this.cartItemsService.deleteItemFromCart(itemID);
     console.log(itemID);
@@ -52,7 +58,12 @@ checkout(){
       alert('Failed to get categories ' + JSON.stringify(error));
     });
   }
+  @ViewChild('myInput', { static: false }) input: ElementRef;
 
+  delete(){
+    this.searchText = null
+    this.input.nativeElement.focus();
+  }
   deleteAllCartItems() {
     let cartID = parseInt(sessionStorage.getItem("cartID"));
     let observable = this.cartsService.deleteAllCartItems(cartID);

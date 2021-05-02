@@ -16,7 +16,7 @@ async function creatNewCart(customerID) {
 };
 
 async function getCartStatus(cartID) {
-    let sql = `SELECT status FROM supermarket.cart where cartID = ?;`;
+    let sql = `SELECT status, dateOfCreation FROM supermarket.cart where cartID = ?;`;
     let parameters = [cartID];
     let cartStatus;
     try {
@@ -40,9 +40,25 @@ async function deleteAllCartItems(cartID) {
     }
 };
 
+async function updateCartStatus(cartID) {
+    let sql = `UPDATE supermarket.cart
+                SET status = 1
+               WHERE
+                   cartID = ?;`;
+    let parameters = [cartID];
+    try {
+        return await connection.executeWithParameters(sql, parameters);
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
+    }
+};
+
+
 
 module.exports = {
     creatNewCart,
     getCartStatus,
-    deleteAllCartItems
+    deleteAllCartItems,
+    updateCartStatus
 };

@@ -33,10 +33,11 @@ async function updateOrder(order) {
     }
 };
 
-async function addNewOrder(newOrderDetails) {
-    let sql = `INSERT INTO orders (customerID,cartID, totalPrice, cityToDeliver, addressToDeliver, dateToDeliver, orderDate, CVV) values (?,?,?,?,?,?,?,?);`;
-    let parameters = [newOrderDetails.customerID, newOrderDetails.cartID, newOrderDetails.totalPrice, newOrderDetails.cityToDeliver, newOrderDetails.addressToDeliver,
-    newOrderDetails.dateToDeliver, new Date(), newOrderDetails.CVV];
+async function addNewOrder(customerID, newOrderDetails) {
+    let sql = `INSERT INTO orders (customerID,cartID, totalPrice, cityToDeliver, addressToDeliver, dateToDeliver, orderDate, payment4LastDigits) values (?,?,?,?,?,?,?,?);`;
+    let dateToDeliver = newOrderDetails.dateToDeliver.split("T");
+    let parameters = [customerID, newOrderDetails.cartID, newOrderDetails.totalPrice, newOrderDetails.cityToDeliver, newOrderDetails.addressToDeliver,
+        dateToDeliver[0], new Date(), newOrderDetails.payment4LastDigits];
     try {
         await connection.executeWithParameters(sql, parameters);
     }
