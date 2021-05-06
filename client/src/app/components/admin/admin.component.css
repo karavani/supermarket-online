@@ -42,16 +42,17 @@ margin: 3px;
 }
 
 a{
-display: inline-block;
-margin: 2px;
-color: #48dbfb;
-font-size: 15px;
-font-weight: 500;
-width: 180px;
-border: 1px solid #48dbfb;
-padding: 14px 0;
-border-radius: 6px;
-transition: .2s linear;
+    display: flex;
+    justify-content: center;
+    margin: 0px;
+    color: #48dbfb;
+    font-size: 15px;
+    font-weight: 500;
+    width: 180px;
+    border: 1px solid #48dbfb;
+    padding: 10px 0;
+    border-radius: 6px;
+    transition: .2s linear;
 }
 
 a:hover,

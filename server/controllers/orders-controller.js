@@ -12,21 +12,8 @@ server.post("/", async (request, response, next) => {
     let customerID = cache.extractUserDataFromCache(request).id;
 
     let newOrderDetails = request.body;
-    console.log(newOrderDetails);
     try {
         await ordersLogic.addNewOrder(customerID, newOrderDetails);
-        response.json();
-    }
-    catch (error) {
-        return next(error);
-    }
-});
-
-server.put("/", async (request, response, next) => {
-
-    let order = request.body;
-    try {
-        await ordersLogic.updateOrder(order);
         response.json();
     }
     catch (error) {

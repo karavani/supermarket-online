@@ -10,10 +10,9 @@ display: block;
 form{
 column-span: all;
 font-size: x-large;
-
 }
 mat-form-field{
-  width: 300px;
+  width:100%;
 }
 
 
@@ -31,9 +30,9 @@ height: 80%;
 
 
   /* On screens that are 600px or less */
-  @media screen and (max-width: 600px) {
-    mat-form-field{
-      width: 200px;
-    }
+  @media screen and (max-width: 900px) {
+   form{
+     font-size: larger;
+   }
         
     }

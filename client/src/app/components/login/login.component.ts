@@ -59,8 +59,7 @@ export class LoginComponent implements OnInit {
         // The method subscribe() ussues an http request to the server
         // successfulServerRequestData
         observable.subscribe(successfulServerRequestData => {
-            console.log(successfulServerRequestData);
-
+            this.success = true;
             sessionStorage.setItem("token", successfulServerRequestData.token + "");
             this.usersService.userType = successfulServerRequestData.userType;
             sessionStorage.setItem("userType", successfulServerRequestData.userType);
@@ -96,12 +95,19 @@ export class LoginComponent implements OnInit {
                 this.usersService.userName = "Admin";
                 return this.router.navigate(["/admin"]);
             }
+           
 
         }, serverErrorResponse => { // Reaching here means that the server had failed
             // serverErrorResponse is the object returned from the ExceptionsHandler
-            alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.message);
+            console.log(serverErrorResponse);
+            if(serverErrorResponse.status == 401){
+                alert("Error! Message: " + serverErrorResponse.statusText+
+                " user email or password are inccorect");
+            }
+            else{
+                alert("Error! Message: " + serverErrorResponse.statusText)
+            }
         });
-        this.success = true;
 
 
     }
@@ -142,7 +148,6 @@ export class LoginComponent implements OnInit {
             userName: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required]
         });
-        this.loginForm.valueChanges.subscribe(console.log)
     }
     get userName() {
         return this.loginForm.get('userName');

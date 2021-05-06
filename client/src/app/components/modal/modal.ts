@@ -43,7 +43,6 @@ export class ModalComponent {
       let observable = this.cartItemsService.addNewItemToCart(newItem);
       observable.subscribe((response) => {
         let itemID = response;
-        console.log(itemID)
         newItem.itemID = +itemID
         this.cartItemsService.cartItemsMap.set(newItem.productID, newItem);
         this.cartItemsService.totalPrice += newItem.totalPrice
@@ -76,7 +75,6 @@ export class ModalComponent {
   open(product: Product) {
     this.isInOrder = false;
     this.product = product;
-    console.log(product)
     this.modal.nativeElement.style.display = 'block';
   }
 

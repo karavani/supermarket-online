@@ -14,24 +14,6 @@ async function getOrdersNumber() {
 }
 
 
-async function updateOrder(order) {
-    let sql = `UPDATE orders set 
-                    totalPrice = ?, 
-                    cityToDeliver = ?,
-                    addressToDeliver = ?,
-                    dateToDeliver = ?,
-                    orderDate = ?,
-                    CVV = ?
-                WHERE orderID = ?;`;
-    let parameters = [order.totalPrice, order.cityToDeliver, order.addressToDeliver,
-    order.dateToDeliver, order.orderDate, order.CVV, order.orderID];
-    try {
-        await connection.executeWithParameters(sql, parameters);
-    }
-    catch (e) {
-        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
-    }
-};
 
 async function addNewOrder(customerID, newOrderDetails) {
     let sql = `INSERT INTO orders (customerID,cartID, totalPrice, cityToDeliver, addressToDeliver, dateToDeliver, orderDate, payment4LastDigits) values (?,?,?,?,?,?,?,?);`;
@@ -78,11 +60,26 @@ async function getOrdersBusyDays() {
         throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
     }
 }
+async function isOrderInBusyDays(dateToDeliver) {
+    let sql = `SELECT 
+                    COUNT(*) AS amount
+                FROM
+                    orders
+                WHERE
+                    dateToDeliver = ?;`;
+    let parameters = [dateToDeliver]
+    try {
+        return await connection.executeWithParameters(sql, parameters);
+    }
+    catch (e) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);
+    }
+}
 
 module.exports = {
     getOrdersNumber,
-    updateOrder,
     getOrderDateByCartID,
     getOrdersBusyDays,
+    isOrderInBusyDays,
     addNewOrder
 };

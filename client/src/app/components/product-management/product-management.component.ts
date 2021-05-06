@@ -12,9 +12,8 @@ import { ProductsService } from 'src/app/services/ProductsService';
 export class ProductManagementComponent implements OnInit {
   public hintDisplay: boolean
 
-  productManagementForm: FormGroup;
-  constructor(private formBuilder: FormBuilder, private breakpointObserver: BreakpointObserver,
-    public productsService: ProductsService) {
+  public productManagementForm: FormGroup;
+  constructor(private formBuilder: FormBuilder, public productsService: ProductsService) {
     this.hintDisplay = false;
   }
 
@@ -25,7 +24,7 @@ export class ProductManagementComponent implements OnInit {
       productName: ['', Validators.required],
       categoryID: [0, Validators.required],
       price: [0, Validators.required],
-      imageURL: ['', Validators.required]
+      imageURL: ['', [Validators.required, Validators.maxLength(245)]]
     });
   }
 
@@ -47,23 +46,25 @@ export class ProductManagementComponent implements OnInit {
         this.productManagementForm.get("imageURL").value);
       let observable = this.productsService.addNewProduct(this.productsService.product);
       observable.subscribe(() => {
+        alert("success");
+        this.cancel();
+      }, error => {
+        alert('Failed to add product ' + JSON.stringify(error));
+      });
+    }
+    else {
+      this.productsService.product = new Product(this.productsService.product.productID, this.productManagementForm.get("productName").value,
+        this.productManagementForm.get("categoryID").value,
+        this.productManagementForm.get("price").value,
+        this.productManagementForm.get("imageURL").value);
+      let observable = this.productsService.updateProduct(this.productsService.product);
+      observable.subscribe(() => {
         alert("succes");
         this.cancel();
       }, error => {
         alert('Failed to get products ' + JSON.stringify(error));
       });
     }
-    this.productsService.product = new Product(this.productsService.product.productID, this.productManagementForm.get("productName").value,
-      this.productManagementForm.get("categoryID").value,
-      this.productManagementForm.get("price").value,
-      this.productManagementForm.get("imageURL").value);
-    let observable = this.productsService.updateProduct(this.productsService.product);
-    observable.subscribe(() => {
-      alert("succes");
-      this.cancel();
-    }, error => {
-      alert('Failed to get products ' + JSON.stringify(error));
-    });
   }
 
 }

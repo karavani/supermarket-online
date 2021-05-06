@@ -3,8 +3,7 @@
         <h1>Product Management</h1>
         <div (mouseover)="hintDisplay=true" (mouseout)="hintDisplay=false">
             <mat-hint *ngIf="hintDisplay">new product</mat-hint><br>
-            <button (click)="addNewProduct()" ><i
-                    class="fas fa-plus"></i></button>
+            <button (click)="addNewProduct()"><i class="fas fa-plus"></i></button>
         </div>
     </div><br>
     <div class="mainContainer">
@@ -31,7 +30,7 @@
                     </mat-form-field><br>
                     <mat-form-field>
                         <input matInput [(ngModel)]="this.productsService.product.price" type="number"
-                            placeholder="price" formControlName='price'>
+                            placeholder="price" formControlName='price' [min]="1">
                         <mat-hint>
                             price in ILS₪
                         </mat-hint>
@@ -44,14 +43,17 @@
                 <mat-form-field>
                     <input matInput [(ngModel)]="this.productsService.product.imageURL" placeholder="imageURL"
                         formControlName='imageURL'>
-
+                    <mat-error>
+                        image URL requierd
+                    </mat-error>
                 </mat-form-field><br>
                 <div>
                     <button mat-raised-button [disabled]="productManagementForm.invalid" color='primary'>Save</button>
-                    <br><hr>
+                    <br>
+                    <hr>
                 </div>
             </form>
-            <button (click)="cancel()">cancel</button>
+            <div class="cancelBtn"><button (click)="cancel()">cancel</button></div>
         </div>
 
     </div>

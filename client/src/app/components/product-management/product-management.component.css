@@ -48,10 +48,9 @@ form{
 mat-hint{
     font-family: 'Courier New', Courier, monospace;
 }
-.topContainer > button{
+.topContainer button, .cancelBtn > button{
     display: inline-block;
     margin: 1px;
-    width: 25px;
     padding : 5px;   
     outline: none; 
     background-color: #fff;
@@ -61,7 +60,7 @@ mat-hint{
     border-radius: 25px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
-.topContainer > button:hover{
+.topContainer button:hover, .cancelBtn > button:hover{
     background-color: rgb(53, 53, 53);
     color: #fff;
     cursor: pointer;
@@ -86,3 +85,4 @@ mat-hint{
     background-color: #000000;
     color: #fff;
     }
+    

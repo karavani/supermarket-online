@@ -43,7 +43,6 @@ async function addUser(user) {
 
 async function isUserExistByEmail(email) {
     let sql = "SELECT email FROM users where email = ? ";
-    console.log(email);
     let parameters = [email]
     try {
         let isUserNameExists = await connection.executeWithParameters(sql, parameters);

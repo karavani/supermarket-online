@@ -28,9 +28,6 @@ export class UserService {
     public createUser(UserRegisterDetails: UserRegisterDetails): Observable<SuccessfulLoginServerResponse> {
         return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users", UserRegisterDetails);
     }
-    public getCustomerLastCartOrPurchase(userLoginDetails: UserLoginDetails) {
-        return this.http.post<void>("http://localhost:3001/users", userLoginDetails);
-    }
 
     public getCustomerCityAddress() {
         return this.http.get("http://localhost:3001/users/city");

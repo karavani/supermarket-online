@@ -29,19 +29,24 @@ display: flex;
 display: flex;
 flex-wrap: wrap; 
 align-items: center;
-padding: 10px;
+padding: 5px 0px;
 justify-content: center;
 }
-
+app-checkout{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+}
 a{
-display: inline-block;
-margin: 2px;
+display: flex;
+justify-content: center;
+margin: 0px;
 color: #48dbfb;
 font-size: 15px;
 font-weight: 500;
 width: 180px;
 border: 1px solid #48dbfb;
-padding: 14px 0;
+padding: 10px 0;
 border-radius: 6px;
 transition: .2s linear;
 }

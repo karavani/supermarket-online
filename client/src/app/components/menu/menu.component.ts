@@ -21,6 +21,7 @@ export class MenuComponent implements OnInit {
   quantity: number;
 
   ngOnInit(): void {
+    this.cartItemsService.totalPrice = 0;
     let cartID = parseInt(sessionStorage.getItem("cartID"));
     let observable = this.cartItemsService.getCartItems(cartID);
     observable.subscribe(response => {
@@ -29,7 +30,7 @@ export class MenuComponent implements OnInit {
         this.cartItemsService.totalPrice += item.totalPrice;
       });
     }, error => {
-      alert('Failed to get categories ' + JSON.stringify(error));
+      alert('Failed to get cart items ' + JSON.stringify(error.statusText));
     });
   }
   searchInCart() {
@@ -49,13 +50,12 @@ export class MenuComponent implements OnInit {
   }
   deleteItem(itemID: number, productID: number) {
     let observable = this.cartItemsService.deleteItemFromCart(itemID);
-    console.log(itemID);
     observable.subscribe(() => {
       let item = this.cartItemsService.cartItemsMap.get(productID);
       this.cartItemsService.totalPrice -= item.totalPrice;
       this.cartItemsService.cartItemsMap.delete(productID);
     }, error => {
-      alert('Failed to get categories ' + JSON.stringify(error));
+      alert('Failed to delete cart items ' + JSON.stringify(error.statusText));
     });
   }
   @ViewChild('myInput', { static: false }) input: ElementRef;

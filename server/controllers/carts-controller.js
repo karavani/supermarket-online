@@ -9,7 +9,6 @@ server.use(express.json());
 server.post("/", async (request, response, next) => {
 
     let customerID = cache.extractUserDataFromCache(request).id
-    console.log("customerID controller: ", customerID);
     try {
         let cartID = await cartsLogic.creatNewCart(customerID);
         response.json(cartID.insertId);

@@ -34,6 +34,7 @@ function isValidEmail(email) {
 
 
 async function login(user) {
+    
     user.password = crypto.createHash("md5").update(saltLeft + user.password + saltRight).digest("hex");
     let userData = await usersDao.login(user);
     const token = jwt.sign({ sub: saltLeft + userData.userName + saltRight }, config.secret)
@@ -47,8 +48,8 @@ async function login(user) {
     return response;
 }
 
-async function getCustomerLastCartOrPurchase(cartID) {
-    let response = await usersDao.getCustomerLastCartOrPurchase(cartID);
+async function getCustomerLastCartOrPurchase(customerID) {
+    let response = await usersDao.getCustomerLastCartOrPurchase(customerID);
     if (response == null) {
         return response;
     }

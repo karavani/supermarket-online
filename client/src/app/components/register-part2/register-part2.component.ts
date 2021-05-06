@@ -29,7 +29,6 @@ export class RegisterPart2Component implements OnInit {
   }
 
   onItemChange(value: string) {
-    console.log(" Value is : ", value);
     this.city = value;
   }
   register(): void {
@@ -38,7 +37,6 @@ export class RegisterPart2Component implements OnInit {
     this.stateService.newUser.address = this.addressFormControl.value
     this.stateService.newUser.firstName = this.firstNameFormControl.value
     this.stateService.newUser.lastName = this.lastNameFormControl.value
-    console.log(this.stateService.newUser);
     const observable = this.usersService.createUser(this.stateService.newUser);
     observable.subscribe(() => {
       alert("yayy! user created succesfully");

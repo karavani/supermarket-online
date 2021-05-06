@@ -42,7 +42,6 @@ export class AdminComponent implements OnInit {
     observable.subscribe(response => {
       this.productsService.selectedCategory = 0;
       this.productsService.products = response;
-      console.log(response)
     }, error => {
       alert('Failed to get products ' + JSON.stringify(error));
     });

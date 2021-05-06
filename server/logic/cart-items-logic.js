@@ -1,11 +1,19 @@
 const cartItemsDao = require('../dao/cart-items-dao');
+let ErrorType = require("./../errors/error-type");
+let ServerError = require("./../errors/server-error");
 
 async function addNewItemToCart(newCartItem) {
+    if (newCartItem.cartID == undefined) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, e)
+    }
     let response = await cartItemsDao.addNewItemToCart(newCartItem);
     return response;
 }
 
 async function getCartItems(cartID) {
+    if (cartID == undefined) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, e)
+    }
     let response = await cartItemsDao.getCartItems(cartID);
     return response;
 }

@@ -28,7 +28,6 @@ server.post("/", async (request, response, next) => {
 
     // Extracting the JSON from the packet's BODY
     let newUserDetails = request.body;
-    console.log(newUserDetails);
     try {
         let successfullLoginData = await usersLogic.addUser(newUserDetails);
         response.json(successfullLoginData);
@@ -51,9 +50,7 @@ server.get("/street", async (request, response, next) => {
     }
 });
 server.get("/city", async (request, response, next) => {
-    console.log("asdasd");
     let customerID = cache.extractUserDataFromCache(request).id;
-    console.log(customerID);
     try {
         let resulte = await usersLogic.getCustomerCity(customerID);
         response.json(resulte);
@@ -64,16 +61,5 @@ server.get("/city", async (request, response, next) => {
 });
 
 
-server.get("/:id", async (request, response, next) => {
-
-    let customerID = request.params.id;
-    try {
-        let resulte = await usersLogic.getCustomerLastCartOrPurchase(customerID);
-        response.json(resulte);
-    }
-    catch (error) {
-        return next(error);
-    }
-});
 
 module.exports = server;

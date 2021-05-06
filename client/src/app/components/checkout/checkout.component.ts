@@ -48,13 +48,11 @@ export class CheckoutComponent implements OnInit {
       deliveryDate: ['', [Validators.required, this.weekendValidator(), this.busyDaysValidator()]],
       creditCard: ['', [Validators.required, Validators.pattern("^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$")]]
     })
-    this.orderFormGroup.valueChanges.subscribe(console.log)
   }
   onDblGetCity() {
     let observable = this.userService.getCustomerCityAddress();
     observable.subscribe((response: string) => {
       this.orderFormGroup.get("city").setValue(response);
-      console.log(response);
     }, error => {
       alert('Failed to get products ' + JSON.stringify(error));
     });
@@ -98,17 +96,18 @@ export class CheckoutComponent implements OnInit {
   }
 
   order() {
-    this.modal.nativeElement.style.display = 'block';
     const blob = new Blob([this.receieptContent()], { type: 'text/plain' });
     this.url = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(blob));
     let payment4LastDigits = this.creditCard.value.toString().slice(-4);
     let order = new OrderDetails(parseInt(sessionStorage.getItem("cartID")), this.cartItemsService.totalPrice,
-      this.city.value, this.street.value, this.deliveryDate.value, payment4LastDigits);
+    this.city.value, this.street.value, this.deliveryDate.value, payment4LastDigits);
     let observable = this.ordersService.addNewOrder(order)
     observable.subscribe(() => {
+      this.modal.nativeElement.style.display = 'block';
       this.initCart();
     }, error => {
-      alert('Failed to get products ' + JSON.stringify(error));
+      alert('Failed to make order ' + JSON.stringify(error));
+      console.log(error);
     });
   }
 

@@ -1,13 +1,13 @@
 <div class="container">
-    <div class="left" [ngClass]="{hidden : isMobile}">
+    <div class="left">
     </div>
-    <div class="center" [ngClass]="{centerMobile : isMobile}">
+    <div class="center">
         <h1><i class="fab fa-opencart"></i> SuperMarket Online</h1>
 
     </div>
-    <div class="right" [ngClass]="{rightMobile : isMobile}">
-        <div *ngIf="this.usersService.userName !== '' ">
-            <h3>hello {{this.usersService.userName}}!</h3>
+    <div class="right">
+        <div class="userDetails" *ngIf="this.usersService.userName !== '' ">
+            <p>hello {{this.usersService.userName}}!</p>
             <a href="/home" (click)="logout()">logout</a>
         </div>
         <div class="searchContainer">

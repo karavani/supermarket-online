@@ -30,7 +30,7 @@ export class ProductsService {
         return this.http.get<Product[]>("http://localhost:3001/products");
     }
     public getAllProductsByCategory(categoryID: number): Observable<Product[]> {
-        return this.http.get<Product[]>("http://localhost:3001/products/category/" + categoryID);
+        return this.http.get<Product[]>("http://localhost:3001/products/categories/" + categoryID);
     }
     public getProductByName(searchText: string) {
         return this.http.get<Product[]>("http://localhost:3001/products/" + searchText);

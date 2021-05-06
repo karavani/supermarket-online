@@ -20,37 +20,32 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild('myInput', { static: false }) input: ElementRef;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    if (window.innerWidth <= 767) {
-      this.isMobile = true;
-    }
-    else {
-      this.isMobile = false;
-    }
-
-  }
   ngOnInit(): void {
-    if(sessionStorage.getItem("userName")){
+    if (sessionStorage.getItem("userName")) {
       this.usersService.userName = sessionStorage.getItem("userName");
     }
 
   }
-  logout(){
+  logout() {
     sessionStorage.clear();
 
   }
 
   search() {
-    this.productsService.selectedCategory = 999;
-    let observable = this.productsService.getProductByName(this.searchText);
-    observable.subscribe((response) => {
-      this.productsService.products = response;
-      this.searchText = "";
-      this.input.nativeElement.focus();
-    }, error => {
-      alert('Failed to get products ' + JSON.stringify(error));
-    });
+    if (sessionStorage.getItem("isLoggedIn")) {
+      this.productsService.selectedCategory = 999;
+      let observable = this.productsService.getProductByName(this.searchText);
+      observable.subscribe((response) => {
+        this.productsService.products = response;
+        this.searchText = "";
+        this.input.nativeElement.focus();
+      }, error => {
+        alert('Failed to get products ' + JSON.stringify(error.statusText));
+      });
+    }
+    else {
+      alert("You need to log in first..")
+    }
   }
 
 }

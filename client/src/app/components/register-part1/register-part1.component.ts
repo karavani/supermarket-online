@@ -31,7 +31,6 @@ export class RegisterPart1Component implements OnInit {
     this.stateService.newUser.id = this.idFormControl.value
     this.stateService.newUser.email = this.emailFormControl.value
     this.stateService.newUser.password = this.passwordFormControl.value
-    console.log(this.stateService.newUser);
   }
   ngOnInit(): void {
     this.idFormControl = new FormControl("", Validators.required);

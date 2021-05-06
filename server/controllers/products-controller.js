@@ -1,16 +1,17 @@
 const productsLogic = require('../logic/products-logic');
 const express = require("express");
-
+const cache = require("./cache-controller");
 
 const server = express();
 
 server.use(express.json());
 
+// POST http://localhost:3001/products
 server.post("/", async (request, response, next) => {
-
+    let userType = cache.extractUserDataFromCache(request).userType;
     let newProductDetails = request.body;
     try {
-        await productsLogic.addNewProduct(newProductDetails);
+        await productsLogic.addNewProduct(userType, newProductDetails);
         response.json();
     }
     catch (error) {
@@ -18,11 +19,12 @@ server.post("/", async (request, response, next) => {
     }
 });
 
+// PUT http://localhost:3001/products
 server.put("/", async (request, response, next) => {
-
+    let userType = cache.extractUserDataFromCache(request).userType;
     let product = request.body;
     try {
-        await productsLogic.updateProduct(product);
+        await productsLogic.updateProduct(userType, product);
         response.json();
     }
     catch (error) {
@@ -68,8 +70,8 @@ server.get("/number", async (request, response, next) => {
 });
 
 
-// GET http://localhost:3001/products/category/:id
-server.get("/category/:id", async (request, response, next) => {
+// GET http://localhost:3001/products/categories/:id
+server.get("/categories/:id", async (request, response, next) => {
     let id = request.params.id;
     try {
         let allProductsByCategory = await productsLogic.getAllProductsByCategory(id);

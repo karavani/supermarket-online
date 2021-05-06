@@ -27,14 +27,13 @@ export class CustomerComponent implements OnInit {
       this.productsService.selectedCategory = 0;
       this.productsService.products = response;
     }, error => {
-      alert('Failed to get products ' + JSON.stringify(error));
+      alert('Failed to get products ' + JSON.stringify(error.statusText));
     });
   }
   @ViewChild('modal', { static: false }) modal: ModalComponent
 
   openModal(product: Product) {
     let productID = product.productID
-    console.log(productID);
     if (this.cartItemsService.cartItemsMap.has(productID)) {
       alert("product already in cart")
       this.modal.btnSubText = "update quantity";
@@ -51,16 +50,15 @@ export class CustomerComponent implements OnInit {
       this.productsService.selectedCategory = categoryID;
       this.productsService.products = response;
     }, error => {
-      alert('Failed to get products ' + JSON.stringify(error));
+      alert('Failed to get products ' + JSON.stringify(error.statusText));
     });
   }
   getAllCategories() {
     let observable = this.productsService.getAllCategories();
     observable.subscribe(response => {
-      console.log(response);
       this.categories = response;
     }, error => {
-      alert('Failed to get categories ' + JSON.stringify(error));
+      alert('Failed to get categories ' + JSON.stringify(error.statusText));
     });
   }
 

@@ -1,4 +1,14 @@
-
+.topContainer{
+    padding: 10px;
+    font-size: larger;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+h1{
+    font-family: 'Courier New', Courier, monospace;
+}
 button, input{
     display: inline-block;
     margin: 4px;

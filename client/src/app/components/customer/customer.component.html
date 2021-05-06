@@ -2,7 +2,7 @@
     <aside id="menu" [ngClass]="{visible : minimise}">
         <app-menu></app-menu>
     </aside>
-    <app-checkout *ngIf="this.cartsService.isInOrder"></app-checkout>
+    <app-checkout *ngIf="this.cartsService.isInOrder" [ngClass]="{visible : minimise}"></app-checkout>
     <main *ngIf="!this.cartsService.isInOrder" [ngClass]="{visible : !minimise}">
         <button class="toggleBtn" *ngIf="!this.cartsService.isInOrder" (click)="minimise = !minimise"><i *ngIf="!minimise" class="fas fa-angle-double-right"></i>
             <i *ngIf="minimise" class="fas fa-angle-double-left"></i><i class="fas fa-shopping-cart"></i></button>
@@ -14,7 +14,7 @@
         <div class="mainContainer">
             <div class="productCard" *ngFor="let product of this.productsService.products">
                 <app-product-card productName={{product.productName}} price={{product.price}}₪
-                    imageURL={{product.imageURL}} btnValue="add to cart" (childEvent)=openModal(product)></app-product-card>
+                    imageURL={{product.imageURL}} iClassName="fas fa-cart-plus" (childEvent)=openModal(product)></app-product-card>
             </div>
         </div>
 
