@@ -1,47 +1,36 @@
-button[disabled]{
-border: 1px solid #c7c7c7;
-background-color: #cccccc;
-color: #9b9b9b;
-}
-button:hover[disabled]{
-cursor: auto;
-}
 
-button{
-width: 150px;
-font-size: large;
-margin: 10px;
-padding : 10px;  
-}
-button:hover{
-cursor: pointer;
-}
-input {
-width: 250px;
-font-size: large;
-margin: 10px;
-padding : 10px;    
-border: black 1px solid;
 
-/* Round corners button */
-border-radius: 25px;
-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+div .regiterContainer{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	width: 40%;
+	height: 50%;
+	margin: 10px;
+	padding: 15px;
 }
+.btn-form>button{
+	float: right;
+}
+mat-form-field, .btn-form{
+	padding: 0px 6px;
+	background-color: white;
+	width: 50%;
+	font-size: larger;
+	padding: 10px;
+  }
+:host{
+	display: flex;
+	flex-direction: column;
 
-input:hover{
-box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
-div{
-display: flex;
-justify-content: center;
-align-items: center;
-font-family: sans-serif;
-padding: 1rem;
-}
-form{
-column-span: all;
-}
-
+form {	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+  }
 h1{
     color: gray;
     font-family: 'Akaya Telivigala', cursive;
@@ -50,11 +39,12 @@ h1{
     color: rgb(0, 0, 0);
     font-size: larger;
 }
-.registerContainer{
-margin-top: 10%;
+a{
+	float: left;
+	margin: 0px 5px;
 }
 
-.errorMessage{
+/* .errorMessage{
 	animation-name: slideDown;
 	-webkit-animation-name: slideDown;	
     opacity: 0.7;
@@ -139,4 +129,4 @@ margin-top: 10%;
     @-ms-keyframes fadeIn {
     0% {opacity:0;}
     70% {opacity:0.7;}
-    }
+    } */

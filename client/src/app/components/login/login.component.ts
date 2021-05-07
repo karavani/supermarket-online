@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
     success = false;
     hide = true;
 
-    public loginFormGroup: FormGroup;
     public userNameFormControl: FormControl;
     public passwordFormControl: FormControl;
     public userLoginDetails: UserLoginDetails;

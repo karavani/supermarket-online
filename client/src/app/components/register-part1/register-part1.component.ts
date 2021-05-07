@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { StateService } from 'src/app/services/StateService';
 
 @Component({
@@ -9,60 +9,60 @@ import { StateService } from 'src/app/services/StateService';
 })
 export class RegisterPart1Component implements OnInit {
 
-  public regiterFormGroup: FormGroup;
-  public idFormControl: FormControl;
-  public emailFormControl: FormControl;
-  public passwordFormControl: FormControl;
-  public passwordConfirmFormControl: FormControl;
+  regiterForm: FormGroup;
+  hide = true;
+  constructor(public stateService: StateService, private formBuilder: FormBuilder) { }
 
 
-  constructor(public stateService: StateService) { }
+  mustMatch(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
 
+      if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
 
-  password(formGroup: FormGroup) {
-    const { value: password } = formGroup.get('password');
-    const { value: confirmPassword } = formGroup.get('passwordConfirm');
-    return password === confirmPassword ? null : { passwordNotMatch: true };
+      // set error on matchingControl if validation fails
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ mustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    }
   }
-
 
   regiterPart1(): void {
     this.stateService.registerStatus();
-    this.stateService.newUser.id = this.idFormControl.value
-    this.stateService.newUser.email = this.emailFormControl.value
-    this.stateService.newUser.password = this.passwordFormControl.value
+    this.stateService.newUser.id = this.id.value
+    this.stateService.newUser.email = this.email.value
+    this.stateService.newUser.password = this.password.value
   }
   ngOnInit(): void {
-    this.idFormControl = new FormControl("", Validators.required);
-
-    this.emailFormControl = new FormControl("", [Validators.compose([
-      Validators.required,
-      Validators.minLength(6),
-      Validators.maxLength(30),
-      Validators.email])
-    ]),
-      this.passwordFormControl = new FormControl("", [Validators.compose([
-        Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(30)])
-      ]),
-      this.passwordConfirmFormControl = new FormControl("", [Validators.compose([
-        Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(30)])
-      ]),
-    {
-      validators: this.password.bind(this)
-    }
-    
-
-    // Initializing the from group
-    this.regiterFormGroup = new FormGroup({
-      id: this.idFormControl,
-      email: this.emailFormControl,
-      password: this.passwordFormControl,
-      passwordConfirm: this.passwordConfirmFormControl
-    });
+    this.regiterForm = this.formBuilder.group({
+      id: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30),
+      Validators.pattern(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/)]],
+      confirmPassword: ['', [Validators.required]]
+    },
+      { validator: this.mustMatch('password', 'confirmPassword') }
+    )
   }
+  get id() {
+    return this.regiterForm.get('id');
+  }
+  get email() {
+    return this.regiterForm.get('email');
+  }
+  get password() {
+    return this.regiterForm.get('password');
+  }
+  get confirmPassword() {
+    return this.regiterForm.get('confirmPassword');
+  }
+
+
 }
 
