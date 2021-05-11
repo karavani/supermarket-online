@@ -56,32 +56,7 @@ async function isUserExistByEmail(email) {
     }
 }
 
-async function getCustomerLastCartOrPurchase(customerID) {
-    let sql = `SELECT 
-                cartID, dateOfCreation, status
-                    FROM
-                        supermarket.cart
-                    WHERE
-                        customerID = ?
-                    ORDER BY cartID DESC
-                    LIMIT 1;`;
 
-    let parameters = [customerID];
-    let customerLastCartOrPurchase;
-    try {
-        customerLastCartOrPurchase = await connection.executeWithParameters(sql, parameters);
-    }
-    catch (e) {
-        throw new ServerError(ErrorType.GENERAL_ERROR, e);
-    }
-
-    // Checking if a customer does not have a cart if not, that means he is a new customer
-    if (customerLastCartOrPurchase == null || customerLastCartOrPurchase.length == 0) {
-        return customerLastCartOrPurchase = null;
-    }
-
-    return customerLastCartOrPurchase[0];
-}
 
 async function getCustomerCity(id) {
     let sql = `SELECT 
@@ -117,7 +92,6 @@ async function getCustomerStreetAdress(id) {
 module.exports = {
     addUser,
     isUserExistByEmail,
-    getCustomerLastCartOrPurchase,
     login,
     getCustomerCity,
     getCustomerStreetAdress

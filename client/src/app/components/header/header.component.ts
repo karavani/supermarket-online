@@ -44,6 +44,7 @@ export class HeaderComponent implements OnInit {
       });
     }
     else {
+      this.searchText = "";
       alert("You need to log in first..")
     }
   }

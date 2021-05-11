@@ -14,8 +14,7 @@
         </app-product-card>
 </div>
 </div>
-<div>
-    <hr>
+<div class="bottomContainer">
     <h3>total price: {{this.cartItemsService.totalPrice}}₪</h3>
     <button *ngIf="!this.cartsService.isInOrder" (click)="deleteAllCartItems()"><i class="fas fa-trash"></i></button>
     <button [disabled]="this.cartItemsService.cartItemsMap.size == 0" (click)="checkout()">{{btnSubText}}</button>

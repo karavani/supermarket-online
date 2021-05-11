@@ -23,6 +23,7 @@ server.get("/", async (request, response, next) => {
     let customerID = cache.extractUserDataFromCache(request).id;
     try {
         let cartStatus = await cartsLogic.getCartStatus(customerID);
+        console.log(cartStatus);
         response.json(cartStatus);
     }
     catch (error) {
@@ -30,17 +31,6 @@ server.get("/", async (request, response, next) => {
     }
 });
 
-server.get("/:id", async (request, response, next) => {
-
-    let cartID = request.params.id;
-    try {
-        let cartStatus = await cartsLogic.getCartStatusForCartID(cartID);
-        response.json(cartStatus);
-    }
-    catch (error) {
-        return next(error);
-    }
-});
 
 server.delete("/:id", async (request, response, next) => {
 

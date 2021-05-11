@@ -1,5 +1,5 @@
 const usersDao = require('../dao/users-dao');
-const ordersLogic = require('../logic/orders-logic');
+const cartsLogic = require('../logic/carts-logic');
 
 let ServerError = require("../errors/server-error");
 let ErrorType = require("../errors/error-type");
@@ -41,7 +41,7 @@ async function login(user) {
     const token = jwt.sign({ sub: saltLeft + userData.userName + saltRight }, config.secret)
     cache.put(token, userData);
     if (userData.userType == 'customer') {
-        let cart = await usersDao.getCustomerLastCartOrPurchase(userData.id);
+        let cart = await cartsLogic.getCartStatus(userData.id);
         let response = { token: "Bearer " + token, userType: userData.userType, name: userData.firstName, cart }
         return response;
     }
@@ -49,23 +49,11 @@ async function login(user) {
     return response;
 }
 
-async function getCustomerLastCartOrPurchase(customerID) {
-    let response = await usersDao.getCustomerLastCartOrPurchase(customerID);
-    if (response == null) {
-        return response;
-    }
-    if (response.status == 0) {
-        return response;
-    }
-    if (response.status == 1) {
-        return response;
-    }
-}
-
 async function getCustomerCity(id){
     let response = await usersDao.getCustomerCity(id);
     return response[0].city;
 }
+
 async function getCustomerStreetAdress(id){
     let response = await usersDao.getCustomerStreetAdress(id);
     return response[0].address;
@@ -73,7 +61,6 @@ async function getCustomerStreetAdress(id){
 
 module.exports = {
     addUser,
-    getCustomerLastCartOrPurchase,
     login,
     getCustomerCity,
     getCustomerStreetAdress

@@ -17,7 +17,7 @@ async function creatNewCart(customerID) {
 
 async function getCartStatus(customerID) {
     let sql = `SELECT 
-                    dateOfCreation, status
+                   cartID, dateOfCreation, status
                 FROM
                     supermarket.cart
                 WHERE

@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
         // successfulServerRequestData
         observable.subscribe(successfulServerRequestData => {
             this.success = true;
+            console.log(successfulServerRequestData);
             sessionStorage.setItem("token", successfulServerRequestData.token + "");
             this.usersService.userType = successfulServerRequestData.userType;
             sessionStorage.setItem("userType", successfulServerRequestData.userType);
@@ -67,22 +68,22 @@ export class LoginComponent implements OnInit {
                 this.isUserLoggedIn = true;
                 sessionStorage.setItem("userName", successfulServerRequestData.name);
                 this.usersService.userName = successfulServerRequestData.name;
-                if (successfulServerRequestData.cart == null) {
+                if (successfulServerRequestData.cart[0] == null) {
                     this.openCartMessage = "welcome " + successfulServerRequestData.name + "!";
                     this.startShoppingButtonValue = "start shopping";
                     sessionStorage.setItem("lastOpenCartDate", this.openCartMessage);
                     return
                 }
-                if (successfulServerRequestData.cart.status != 1) {
-                    this.openCartMessage = "you have an open cart from date: " + successfulServerRequestData.cart.dateOfCreation;
+                if (successfulServerRequestData.cart[0].status != 1) {
+                    this.openCartMessage = "you have an open cart from date: " + successfulServerRequestData.cart[0].dateOfCreation;
                     this.startShoppingButtonValue = "resume shopping";
-                    this.cartsService.cartID = successfulServerRequestData.cart.cartID;
-                    sessionStorage.setItem("cartID", successfulServerRequestData.cart.cartID.toString());
+                    this.cartsService.cartID = successfulServerRequestData.cart[0].cartID;
+                    sessionStorage.setItem("cartID", successfulServerRequestData.cart[0].cartID.toString());
                     sessionStorage.setItem("lastOpenCartDate", this.openCartMessage);
                     return
                 }
                 else {
-                    this.openCartMessage = "your last purchase was in: " + successfulServerRequestData.cart.dateOfCreation;
+                    this.openCartMessage = "your last purchase was in: " + successfulServerRequestData.cart[0].dateOfCreation;
                     this.startShoppingButtonValue = "start shopping";
                     sessionStorage.setItem("lastOpenCartDate", this.openCartMessage);
                     return
