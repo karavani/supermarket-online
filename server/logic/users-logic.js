@@ -12,11 +12,12 @@ const saltRight = "sdkjfhdskajh";
 const saltLeft = "--mnlcfs;@!$ ";
 
 async function addUser(user) {
+
     // Validations
     if (!isValidEmail(user.email)) {
         throw new ServerError(ErrorType.EMAIL_NOT_VALID);
     }
-    if (!usersDao.isUserExistByEmail(user.email)) {
+    if (await usersDao.isUserExistByEmail(user.email)) {
         throw new ServerError(ErrorType.USER_NAME_ALREADY_EXIST);
     }
     else {

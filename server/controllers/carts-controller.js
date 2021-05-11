@@ -18,11 +18,23 @@ server.post("/", async (request, response, next) => {
     }
 });
 
+server.get("/", async (request, response, next) => {
+
+    let customerID = cache.extractUserDataFromCache(request).id;
+    try {
+        let cartStatus = await cartsLogic.getCartStatus(customerID);
+        response.json(cartStatus);
+    }
+    catch (error) {
+        return next(error);
+    }
+});
+
 server.get("/:id", async (request, response, next) => {
 
     let cartID = request.params.id;
     try {
-        let cartStatus = await cartsLogic.getCartStatus(cartID);
+        let cartStatus = await cartsLogic.getCartStatusForCartID(cartID);
         response.json(cartStatus);
     }
     catch (error) {

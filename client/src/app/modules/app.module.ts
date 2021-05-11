@@ -5,16 +5,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { LayoutComponent } from '../components/layout/layout.component';
 import { MainComponent } from '../components/main/main.component';
 import { HeaderComponent } from '../components/header/header.component';
-import { MenuComponent } from '../components/menu/menu.component';
+import { CartComponent } from '../components/customer/cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { LoginComponent } from '../components/login/login.component';
+import { LoginComponent } from '../components/main/login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AboutComponent } from '../components/about/about.component';
-import { GeneralInfoComponent } from '../components/general-info/general-info.component';
+import { AboutComponent } from '../components/main/about/about.component';
+import { GeneralInfoComponent } from '../components/main/general-info/general-info.component';
 import { RegisterComponent } from '../components/register/register.component';
-import { RegisterPart1Component } from '../components/register-part1/register-part1.component';
-import { RegisterPart2Component } from '../components/register-part2/register-part2.component';
+import { RegisterPart1Component } from '../components/register/register-part1/register-part1.component';
+import { RegisterPart2Component } from '../components/register/register-part2/register-part2.component';
 import { CustomerComponent } from '../components/customer/customer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationInterceptor } from '../interceptors/AuthenticationInterceptor';
@@ -22,7 +22,7 @@ import { ProductsService } from '../services/ProductsService';
 import { UserService } from '../services/UserService';
 import { ProductCardComponent } from '../components/product-card/product-card.component';
 import { ModalComponent } from '../components/modal/modal';
-import { CheckoutComponent } from '../components/checkout/checkout.component';
+import { CheckoutComponent } from '../components/customer/checkout/checkout.component';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -35,13 +35,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { AdminComponent } from '../components/admin/admin.component';
 import { ProductManagementComponent } from '../components/product-management/product-management.component';
+import { ProductsPipeByCategory } from '../pipes/ProductsPipeByCategory';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     MainComponent,
     HeaderComponent,
-    MenuComponent,
+    CartComponent,
     LoginComponent,
     AboutComponent,
     AdminComponent,
@@ -54,6 +55,7 @@ import { ProductManagementComponent } from '../components/product-management/pro
     ModalComponent,
     CheckoutComponent,
     ProductManagementComponent,
+    ProductsPipeByCategory,
   ],
   imports: [
     BrowserModule,

@@ -11,8 +11,8 @@ server.post("/", async (request, response, next) => {
     let userType = cache.extractUserDataFromCache(request).userType;
     let newProductDetails = request.body;
     try {
-        await productsLogic.addNewProduct(userType, newProductDetails);
-        response.json();
+        let res = await productsLogic.addNewProduct(userType, newProductDetails);
+        response.json(res);
     }
     catch (error) {
         return next(error);

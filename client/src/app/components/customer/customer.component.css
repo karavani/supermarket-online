@@ -25,12 +25,17 @@ min-height: 100%;
 display: flex;
 }
 
+
 .topContainer{
-display: flex;
-flex-wrap: wrap; 
-align-items: center;
-padding: 5px 0px;
-justify-content: center;
+    display: flex;
+    flex-wrap: wrap; 
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    margin: 5px;
+    justify-content: center;
+    height: 100px;
+    overflow-x: scroll;
 }
 app-checkout{
     width: 70%;
@@ -40,7 +45,7 @@ app-checkout{
 a{
 display: flex;
 justify-content: center;
-margin: 0px;
+margin: 1px;
 color: #48dbfb;
 font-size: 15px;
 font-weight: 500;
@@ -55,16 +60,30 @@ a:hover,
 background-color: #48dbfb;
 color: #fff;
 }
+.mainContainer::-webkit-scrollbar,.topContainer::-webkit-scrollbar
+{
+	width: 8px;
+    height: 8px;
+	background-color: #f5f5f57e;
+}
 
+.mainContainer::-webkit-scrollbar-thumb,.topContainer::-webkit-scrollbar-thumb
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
 
 .mainContainer{
 display: flex;
 flex-wrap: wrap; 
-align-items: center;
-padding: 10px;
-justify-content: center;
+align-items: flex-start;
+padding: 5px;
+justify-content: space-evenly;
+height: 50%;
+overflow-y: scroll;
 }
 .productCard{
+text-transform:capitalize;
 display: inline-block;
 width: 150px;
 height: 150px;

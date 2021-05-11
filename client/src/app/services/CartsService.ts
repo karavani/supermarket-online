@@ -24,8 +24,8 @@ export class CartsService {
     public deleteAllCartItems(cartID: number) {
         return this.http.delete("http://localhost:3001/carts/" + cartID);
     }
-    public getCartStatus(cartID: number) {
-        return this.http.get<CartStatus>("http://localhost:3001/carts/" + cartID);
+    public getCartStatus() {
+        return this.http.get<CartStatus>("http://localhost:3001/carts/");
     }
 
 }

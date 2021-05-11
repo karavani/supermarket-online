@@ -9,7 +9,7 @@ import { StateService } from 'src/app/services/StateService';
 })
 export class RegisterPart1Component implements OnInit {
 
-  regiterForm: FormGroup;
+  registerForm: FormGroup;
   hide = true;
   constructor(public stateService: StateService, private formBuilder: FormBuilder) { }
 
@@ -33,14 +33,14 @@ export class RegisterPart1Component implements OnInit {
     }
   }
 
-  regiterPart1(): void {
+  registerPart1(): void {
     this.stateService.registerStatus();
     this.stateService.newUser.id = this.id.value
     this.stateService.newUser.email = this.email.value
     this.stateService.newUser.password = this.password.value
   }
   ngOnInit(): void {
-    this.regiterForm = this.formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       id: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30),
@@ -51,16 +51,16 @@ export class RegisterPart1Component implements OnInit {
     )
   }
   get id() {
-    return this.regiterForm.get('id');
+    return this.registerForm.get('id');
   }
   get email() {
-    return this.regiterForm.get('email');
+    return this.registerForm.get('email');
   }
   get password() {
-    return this.regiterForm.get('password');
+    return this.registerForm.get('password');
   }
   get confirmPassword() {
-    return this.regiterForm.get('confirmPassword');
+    return this.registerForm.get('confirmPassword');
   }
 
 

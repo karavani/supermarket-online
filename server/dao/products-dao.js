@@ -41,6 +41,8 @@ async function addNewProduct(newProductDetails) {
     newProductDetails.imageURL];
     try {
         await connection.executeWithParameters(sql, parameters);
+        let productId = await connection.execute("SELECT LAST_INSERT_ID() as id;");
+        return productId[0].id;
     }
     catch (e) {
         throw new ServerError(ErrorType.GENERAL_ERROR, sql, e);

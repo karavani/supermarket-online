@@ -1,15 +1,13 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Product } from 'src/app/models/Product';
 import { CartItemsService } from 'src/app/services/CartItemsService';
 import { CartsService } from 'src/app/services/CartsService';
-import { ProductCardComponent } from '../product-card/product-card.component';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.css']
 })
-export class MenuComponent implements OnInit {
+export class CartComponent implements OnInit {
 
   public btnSubText: string;
   public searchText: string

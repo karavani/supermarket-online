@@ -11,8 +11,8 @@ export class CustomerGuard implements CanActivate {
     public canActivate(): boolean {
         const isLoggedIn = sessionStorage.getItem("isLoggedIn");
         const userType = sessionStorage.getItem("userType");
-        const userHasCart = sessionStorage.getItem("cartID");
-        if (isLoggedIn == "true" && userType == "customer" && userHasCart) {
+        // const userHasCart = sessionStorage.getItem("cartID");
+        if (isLoggedIn == "true" && userType == "customer") {
             return true;
         }
         if (isLoggedIn == "true" && userType == "admin") {

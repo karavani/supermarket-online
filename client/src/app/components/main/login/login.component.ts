@@ -94,21 +94,39 @@ export class LoginComponent implements OnInit {
                 this.usersService.userName = "Admin";
                 return this.router.navigate(["/admin"]);
             }
-           
+
 
         }, serverErrorResponse => { // Reaching here means that the server had failed
             // serverErrorResponse is the object returned from the ExceptionsHandler
             console.log(serverErrorResponse);
-            if(serverErrorResponse.status == 401){
-                alert("Error! Message: " + serverErrorResponse.statusText+
-                " user email or password are inccorect");
+            if (serverErrorResponse.status == 401) {
+                alert("Error! Message: " + serverErrorResponse.statusText +
+                    " user email or password are inccorect");
             }
-            else{
+            else {
                 alert("Error! Message: " + serverErrorResponse.statusText)
             }
         });
 
 
+    }
+    public getCartStatus() {
+        if (sessionStorage.getItem("isLoggedIn") == "true" && sessionStorage.getItem("userType") == "customer") {
+            let observable = this.cartsService.getCartStatus()
+            observable.subscribe(response => {
+                console.log(response);
+                if (response[0].status == 1) {
+                    this.openCartMessage = "your last purchase was in date: " + response[0].dateOfCreation;
+                    sessionStorage.setItem("lastOpenCartDate", this.openCartMessage);
+                }
+                if (response[0].status == 0){
+                    this.openCartMessage = "you have an open cart from date: " + response[0].dateOfCreation;
+                    sessionStorage.setItem("lastOpenCartDate", this.openCartMessage);
+                }
+            }, error => {
+                alert('Failed to get products ' + JSON.stringify(error));
+            });
+        }
     }
 
     public startShopping() {
@@ -121,14 +139,15 @@ export class LoginComponent implements OnInit {
                 alert('Failed to get products ' + JSON.stringify(error));
             });
         }
-        if(sessionStorage.getItem("userType") == "customer"){
+        if (sessionStorage.getItem("userType") == "customer") {
             this.router.navigate(["/customer"]);
         }
-        else{
+        else {
             this.router.navigate(["/admin"]);
         }
     }
     ngOnInit() {
+        this.getCartStatus();
         if (sessionStorage.getItem("userType") == "customer" && sessionStorage.getItem("token")) {
             this.success = true;
             this.isUserLoggedIn = true;
@@ -138,7 +157,7 @@ export class LoginComponent implements OnInit {
         if (sessionStorage.getItem("lastOpenCartDate")) {
             this.openCartMessage = sessionStorage.getItem("lastOpenCartDate");
         }
-        if (sessionStorage.getItem("userType") == "admin" && sessionStorage.getItem("token")){
+        if (sessionStorage.getItem("userType") == "admin" && sessionStorage.getItem("token")) {
             this.success = true;
             this.isUserLoggedIn = true;
             this.startShoppingButtonValue = "Go ahead!";

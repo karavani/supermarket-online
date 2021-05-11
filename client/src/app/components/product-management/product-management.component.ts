@@ -1,4 +1,3 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/models/Product';
@@ -45,9 +44,10 @@ export class ProductManagementComponent implements OnInit {
         this.productManagementForm.get("price").value,
         this.productManagementForm.get("imageURL").value);
       let observable = this.productsService.addNewProduct(this.productsService.product);
-      observable.subscribe(() => {
+      observable.subscribe((response: number) => {
         alert("success");
-        this.cancel();
+        this.productsService.product.productID = response
+        this.initProductsUI();
       }, error => {
         alert('Failed to add product ' + JSON.stringify(error));
       });
@@ -60,11 +60,22 @@ export class ProductManagementComponent implements OnInit {
       let observable = this.productsService.updateProduct(this.productsService.product);
       observable.subscribe(() => {
         alert("succes");
-        this.cancel();
+        this.initProductsUI();
       }, error => {
         alert('Failed to get products ' + JSON.stringify(error));
       });
     }
   }
 
+  initProductsUI() {
+    let products = [];
+    this.productsService.products.forEach((product => {
+      if (product.productID !== this.productsService.product.productID) {
+        products.push(product);
+      };
+    }))
+    products.push(this.productsService.product);
+    this.productsService.products = products;
+    this.cancel();
+  }
 }

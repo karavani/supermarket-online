@@ -52,6 +52,7 @@ export class CheckoutComponent implements OnInit {
   onDblGetCity() {
     let observable = this.userService.getCustomerCityAddress();
     observable.subscribe((response: string) => {
+      console.log(response);
       this.orderFormGroup.get("city").setValue(response);
     }, error => {
       alert('Failed to get products ' + JSON.stringify(error));
@@ -66,14 +67,16 @@ export class CheckoutComponent implements OnInit {
     });
   }
   receieptContent() {
+    let payment4LastDigits = this.creditCard.value.toString().slice(-4).toString();
     let string = this.city.value + "\n" +
       this.street.value +
-      "\n  " + this.deliveryDate.value +
-      "\n  " + this.creditCard.value +
-      "\n  ";
+      "\n  " + this.deliveryDate.value + "\n" + "------------------------------------------------\n" +
+      "\n \n";
     this.cartItemsService.cartItemsMap.forEach(item => {
       string += item.productName + "\tx" + item.quantity + "\t" + item.totalPrice + "₪ \n"
-    })
+    });
+    string += "\n" + "---------------------------------------------------\n" +
+      "\n 💳 " + payment4LastDigits + "  ****  ****  ****" + "\n" + "\n" + "total price: " + this.cartItemsService.totalPrice + "₪"
     return string;
   }
 
@@ -96,11 +99,12 @@ export class CheckoutComponent implements OnInit {
   }
 
   order() {
+    let deliveryDate = this.deliveryDate.value;
     const blob = new Blob([this.receieptContent()], { type: 'text/plain' });
     this.url = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(blob));
     let payment4LastDigits = this.creditCard.value.toString().slice(-4);
     let order = new OrderDetails(parseInt(sessionStorage.getItem("cartID")), this.cartItemsService.totalPrice,
-    this.city.value, this.street.value, this.deliveryDate.value, payment4LastDigits);
+      this.city.value, this.street.value, new Date(deliveryDate.getTime() - deliveryDate.getTimezoneOffset() * 60000), payment4LastDigits);
     let observable = this.ordersService.addNewOrder(order)
     observable.subscribe(() => {
       this.modal.nativeElement.style.display = 'block';

@@ -72,3 +72,41 @@
     </form>
 
 </div> -->
+<div class="registerContainer">
+
+
+    <h1 *ngIf="registerForm.invalid"><span class="steps">1 - <span class="currentStep">2</span></span> - <i class="fas fa-check"></i></h1>
+    <h1 *ngIf="!registerForm.invalid"><span class="steps">1 - 2 - </span><span class="currentStep"><i class="fas fa-check"></i></span></h1>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <mat-form-field appearance="fill">
+            <mat-label>City</mat-label>
+            <mat-select matNativeControl formControlName="city" [(ngModel)]="this.stateService.newUser.city">
+                <mat-option *ngFor="let city of cities" [value]='city'>{{city}}</mat-option>
+            </mat-select><br>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="text" placeholder="Address" [(ngModel)]="this.stateService.newUser.address" formControlName="address"><br>
+            <mat-error *ngIf='address.invalid && address.touched'>
+                Your address does not look right
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="text" placeholder="First Name" [(ngModel)]="this.stateService.newUser.firstName" formControlName="firstName"><br>
+            <mat-error *ngIf="firstName.invalid && firstName.touched">
+                Your password does not look right
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="text" placeholder="Last Name" [(ngModel)]="this.stateService.newUser.lastName" formControlName="lastName"><br>
+            <mat-error *ngIf="lastName.invalid && lastName.touched">
+                Your lastName does not look right
+            </mat-error>
+        </mat-form-field>
+        <div class="btn-form">
+            <button mat-raised-button [disabled]="registerForm.invalid" color='primary'>next <i
+                    class="fas fa-arrow-right"></i></button>
+            <a routerLink="/login">cancel</a>
+        </div>
+    </form>
+
+</div>

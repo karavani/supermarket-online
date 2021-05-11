@@ -1,6 +1,6 @@
 <section>
-    <aside id="menu" [ngClass]="{visible : minimise}">
-        <app-menu></app-menu>
+    <aside id="cart" [ngClass]="{visible : minimise}">
+        <app-cart></app-cart>
     </aside>
     <app-checkout *ngIf="this.cartsService.isInOrder" [ngClass]="{visible : minimise}"></app-checkout>
     <main *ngIf="!this.cartsService.isInOrder" [ngClass]="{visible : !minimise}">
@@ -12,7 +12,7 @@
              (click)="getProductsByCategory(category.categoryID)">{{category.categoryName}}</a>
         </div>
         <div class="mainContainer">
-            <div class="productCard" *ngFor="let product of this.productsService.products">
+            <div class="productCard" *ngFor="let product of this.productsService.products | sortByCategoryPipe">
                 <app-product-card productName={{product.productName}} price={{product.price}}₪
                     imageURL={{product.imageURL}} iClassName="fas fa-cart-plus" (childEvent)=openModal(product)></app-product-card>
             </div>

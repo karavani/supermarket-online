@@ -1,8 +1,8 @@
 <div class="parent">
     <form [formGroup]="orderFormGroup" (ngSubmit)="order()">
-        <mat-form-field appearance="fill">
+        <mat-form-field (dblclick)="onDblGetCity()" appearance="fill">
             <mat-label>City</mat-label>
-            <mat-select matNativeControl (dblclick)="onDblGetCity()" formControlName="city">
+            <mat-select matNativeControl formControlName="city">
                 <mat-option *ngFor="let city of cities" [value]='city'>{{city}}</mat-option>
             </mat-select><br>
         </mat-form-field>
@@ -37,8 +37,8 @@
             </mat-error>
         </mat-form-field>
         <div class="btn-form">
-        <button mat-raised-button [disabled]="orderFormGroup.invalid" color="primary">Submit</button>
-           </div> 
+            <button mat-raised-button [disabled]="orderFormGroup.invalid" color="primary">Submit</button>
+        </div>
     </form>
 </div>
 <div #myModal class="container">

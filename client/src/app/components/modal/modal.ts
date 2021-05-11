@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { CartItemsService } from 'src/app/services/CartItemsService';
-import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-modal',

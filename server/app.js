@@ -16,7 +16,6 @@ server.use(express.json());
 server.use(cors({ origin: ["http://localhost:4200"] }));
 
 server.use(loginFilter());
-
 server.use("/users", usersController);
 server.use("/products", productsController);
 server.use("/orders", ordersController);
