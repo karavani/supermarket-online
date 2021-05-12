@@ -20,8 +20,6 @@ export class LoginComponent implements OnInit {
     success = false;
     hide = true;
 
-    public userNameFormControl: FormControl;
-    public passwordFormControl: FormControl;
     public userLoginDetails: UserLoginDetails;
     private usersService: UserService;
 
@@ -31,11 +29,6 @@ export class LoginComponent implements OnInit {
     public isUserLoggedIn: boolean;
     public userFirstName: string;
 
-    // The router parameter is an example to a short writing of a member + it's assignment
-    // private router: Router EQUIVALENT TO the following 3: 
-    // 1. Member definition
-    // 2. Parameter definition
-    // 3. this.router = router
     constructor(usersService: UserService, private router: Router, cartsService: CartsService
         , private formBuilder: FormBuilder, private breakpointObserver: BreakpointObserver) {
         this.userLoginDetails = new UserLoginDetails();
@@ -59,7 +52,6 @@ export class LoginComponent implements OnInit {
         // successfulServerRequestData
         observable.subscribe(successfulServerRequestData => {
             this.success = true;
-            console.log(successfulServerRequestData);
             sessionStorage.setItem("token", successfulServerRequestData.token + "");
             this.usersService.userType = successfulServerRequestData.userType;
             sessionStorage.setItem("userType", successfulServerRequestData.userType);
@@ -108,9 +100,8 @@ export class LoginComponent implements OnInit {
                 alert("Error! Message: " + serverErrorResponse.statusText)
             }
         });
-
-
     }
+
     public getCartStatus() {
         if (sessionStorage.getItem("isLoggedIn") == "true" && sessionStorage.getItem("userType") == "customer") {
             let observable = this.cartsService.getCartStatus()
@@ -120,7 +111,7 @@ export class LoginComponent implements OnInit {
                     this.openCartMessage = "your last purchase was in date: " + response[0].dateOfCreation;
                     sessionStorage.setItem("lastOpenCartDate", this.openCartMessage);
                 }
-                if (response[0].status == 0){
+                if (response[0].status == 0) {
                     this.openCartMessage = "you have an open cart from date: " + response[0].dateOfCreation;
                     sessionStorage.setItem("lastOpenCartDate", this.openCartMessage);
                 }
@@ -147,6 +138,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(["/admin"]);
         }
     }
+
     ngOnInit() {
         this.getCartStatus();
         if (sessionStorage.getItem("userType") == "customer" && sessionStorage.getItem("token")) {
@@ -168,6 +160,7 @@ export class LoginComponent implements OnInit {
             password: ['', Validators.required]
         });
     }
+
     get userName() {
         return this.loginForm.get('userName');
     }

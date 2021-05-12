@@ -23,7 +23,6 @@ server.get("/", async (request, response, next) => {
     let customerID = cache.extractUserDataFromCache(request).id;
     try {
         let cartStatus = await cartsLogic.getCartStatus(customerID);
-        console.log(cartStatus);
         response.json(cartStatus);
     }
     catch (error) {

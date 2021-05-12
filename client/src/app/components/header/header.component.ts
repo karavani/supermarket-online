@@ -24,8 +24,8 @@ export class HeaderComponent implements OnInit {
     if (sessionStorage.getItem("userName")) {
       this.usersService.userName = sessionStorage.getItem("userName");
     }
-
   }
+  
   logout() {
     sessionStorage.clear();
 

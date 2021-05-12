@@ -30,6 +30,7 @@ export class CustomerComponent implements OnInit {
       alert('Failed to get products ' + JSON.stringify(error.statusText));
     });
   }
+  
   @ViewChild('modal', { static: false }) modal: ModalComponent
 
   openModal(product: Product) {
@@ -53,6 +54,7 @@ export class CustomerComponent implements OnInit {
       alert('Failed to get products ' + JSON.stringify(error.statusText));
     });
   }
+
   getAllCategories() {
     let observable = this.productsService.getAllCategories();
     observable.subscribe(response => {
@@ -61,8 +63,6 @@ export class CustomerComponent implements OnInit {
       alert('Failed to get categories ' + JSON.stringify(error.statusText));
     });
   }
-
-
 
   ngOnInit(): void {
     this.getAllProducts();

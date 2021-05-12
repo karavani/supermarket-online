@@ -49,15 +49,16 @@ export class CheckoutComponent implements OnInit {
       creditCard: ['', [Validators.required, Validators.pattern("^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$")]]
     })
   }
+
   onDblGetCity() {
     let observable = this.userService.getCustomerCityAddress();
     observable.subscribe((response: string) => {
-      console.log(response);
       this.orderFormGroup.get("city").setValue(response);
     }, error => {
       alert('Failed to get products ' + JSON.stringify(error));
     });
   }
+
   onDblGetStreet() {
     let observable = this.userService.getCustomerStreetAddress();
     observable.subscribe(response => {
@@ -66,6 +67,7 @@ export class CheckoutComponent implements OnInit {
       alert('Failed to get products ' + JSON.stringify(error));
     });
   }
+
   receieptContent() {
     let payment4LastDigits = this.creditCard.value.toString().slice(-4).toString();
     let string = this.city.value + "\n" +
@@ -79,7 +81,6 @@ export class CheckoutComponent implements OnInit {
       "\n 💳 " + payment4LastDigits + "  ****  ****  ****" + "\n" + "\n" + "total price: " + this.cartItemsService.totalPrice + "₪"
     return string;
   }
-
 
   getOrdersBusyDays() {
     let observable = this.ordersService.getOrdersBusyDays();
@@ -115,7 +116,6 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
-
   initCart() {
     let observable = this.cartsService.creatNewCart();
     observable.subscribe((response: number) => {
@@ -127,6 +127,7 @@ export class CheckoutComponent implements OnInit {
     })
 
   }
+
   get city() {
     return this.orderFormGroup.get('city');
   }
@@ -143,13 +144,13 @@ export class CheckoutComponent implements OnInit {
     return this.breakpointObserver.isMatched('(max-width: 767px)');
   }
 
-
   busyDaysFilter = (d: Date): boolean => {
     const time = d.getTime();
     const day = (d || new Date()).getDay();
     // Prevent Saturday, Friday and busy days from being selected.
     return !this.myBusyDays.find(x => x.getTime() == time) && day !== 5 && day !== 6;
   }
+
   busyDaysValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       let forbidden = true;
@@ -162,6 +163,7 @@ export class CheckoutComponent implements OnInit {
     };
 
   }
+
   weekendValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       let forbidden = true;

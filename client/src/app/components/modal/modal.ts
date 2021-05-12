@@ -24,9 +24,11 @@ export class ModalComponent {
     this.quantity = 1;
     this.isInOrder = false;
   }
+  
   ngOnInit() {
     this.intCloseModal()
   }
+
   addToCart(quantity: number) {
     if (this.cartItemsService.cartItemsMap.has(this.product.productID)) {
       this.updateCartItem(this.product, quantity)
@@ -86,6 +88,7 @@ export class ModalComponent {
     this.btnSubText = "add to cart";
     this.modal.nativeElement.style.display = 'none';
   }
+
   intCloseModal() {
     this.close();
     this.quantity = 1;

@@ -11,13 +11,14 @@ h1{
     text-shadow: rgba(255, 255, 255, 0.623) 1px 1px;
     color: rgb(0, 0, 0);
     font-family: 'Original Surfer', cursive;
-
+}
+app-product-card{
+    margin-right: .125px;
 }
 .mainContainer{
     border-top: black 1px solid;
     border-bottom: rgb(116, 116, 116) 1px solid;
     background-color: rgba(255, 255, 255, 0.623);
-    padding: 3px;
     height: 300px;
     overflow-y: scroll;
 }

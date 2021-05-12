@@ -53,12 +53,14 @@ transform: translate(-50%, -50%);
 }
 
 
-  /* On screens that are 600px or less, set the background color to olive */
+  /* On screens that are 768px or less, set the background color to olive */
   @media screen and (max-width: 768px) {
     .about-info-background, .login-background,.general-info-background{
         width: 80%;
         position: relative;
+        font-size: larger;
     }
+    
     .main-container{
         display: flex;
         flex-direction: column;

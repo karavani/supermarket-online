@@ -19,6 +19,7 @@ export class CartComponent implements OnInit {
   quantity: number;
 
   ngOnInit(): void {
+    this.initCartBtn();
     this.cartItemsService.totalPrice = 0;
     let cartID = parseInt(sessionStorage.getItem("cartID"));
     let observable = this.cartItemsService.getCartItems(cartID);
@@ -31,21 +32,28 @@ export class CartComponent implements OnInit {
       alert('Failed to get cart items ' + JSON.stringify(error.statusText));
     });
   }
+
   searchInCart() {
     if (this.searchText == "") {
       this.searchText = null
     }
     this.searchText = this.searchText.toLowerCase();
   }
-  checkout() {
-    this.cartsService.isInOrder = !this.cartsService.isInOrder;
-    if (this.btnSubText == "checkout") {
+
+  initCartBtn() {
+    if (this.cartsService.isInOrder) {
       this.btnSubText = "back to shop";
     }
-    else {
+    if (!this.cartsService.isInOrder) {
       this.btnSubText = "checkout"
     }
   }
+
+  checkout() {
+    this.cartsService.isInOrder = !this.cartsService.isInOrder;
+    this.initCartBtn()
+  }
+
   deleteItem(itemID: number, productID: number) {
     let observable = this.cartItemsService.deleteItemFromCart(itemID);
     observable.subscribe(() => {
@@ -56,12 +64,14 @@ export class CartComponent implements OnInit {
       alert('Failed to delete cart items ' + JSON.stringify(error.statusText));
     });
   }
+
   @ViewChild('myInput', { static: false }) input: ElementRef;
 
-  delete(){
+  delete() {
     this.searchText = null
     this.input.nativeElement.focus();
   }
+
   deleteAllCartItems() {
     let cartID = parseInt(sessionStorage.getItem("cartID"));
     let observable = this.cartsService.deleteAllCartItems(cartID);
