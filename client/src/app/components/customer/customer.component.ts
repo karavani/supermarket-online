@@ -22,7 +22,7 @@ export class CustomerComponent implements OnInit {
   }
 
   getAllProducts() {
-    let observable = this.productsService.getAllProducts();
+    const observable = this.productsService.getAllProducts();
     observable.subscribe(response => {
       this.productsService.selectedCategory = 0;
       this.productsService.products = response;
@@ -34,7 +34,7 @@ export class CustomerComponent implements OnInit {
   @ViewChild('modal', { static: false }) modal: ModalComponent
 
   openModal(product: Product) {
-    let productID = product.productID
+    const productID = product.productID
     if (this.cartItemsService.cartItemsMap.has(productID)) {
       alert("product already in cart")
       this.modal.btnSubText = "update quantity";
@@ -46,7 +46,7 @@ export class CustomerComponent implements OnInit {
   }
 
   getProductsByCategory(categoryID: number) {
-    let observable = this.productsService.getAllProductsByCategory(categoryID);
+    const observable = this.productsService.getAllProductsByCategory(categoryID);
     observable.subscribe(response => {
       this.productsService.selectedCategory = categoryID;
       this.productsService.products = response;
@@ -56,7 +56,7 @@ export class CustomerComponent implements OnInit {
   }
 
   getAllCategories() {
-    let observable = this.productsService.getAllCategories();
+    const observable = this.productsService.getAllCategories();
     observable.subscribe(response => {
       this.categories = response;
     }, error => {

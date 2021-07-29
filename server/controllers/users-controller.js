@@ -12,9 +12,9 @@ server.use(express.json());
 server.post("/login", async (request, response, next) => {
 
     // Extracting the JSON from the packet's BODY
-    let userLoginDetails = request.body;
+    const userLoginDetails = request.body;
     try {
-        let successfullLoginData = await usersLogic.login(userLoginDetails);
+        const successfullLoginData = await usersLogic.login(userLoginDetails);
         response.json(successfullLoginData);
     }
     catch (error) {
@@ -27,9 +27,9 @@ server.post("/login", async (request, response, next) => {
 server.post("/", async (request, response, next) => {
 
     // Extracting the JSON from the packet's BODY
-    let newUserDetails = request.body;
+    const newUserDetails = request.body;
     try {
-        let successfullLoginData = await usersLogic.addUser(newUserDetails);
+        const successfullLoginData = await usersLogic.addUser(newUserDetails);
         response.json(successfullLoginData);
     }
     catch (error) {
@@ -40,9 +40,9 @@ server.post("/", async (request, response, next) => {
 
 server.get("/street", async (request, response, next) => {
     
-    let customerID = cache.extractUserDataFromCache(request).id;
+    const customerID = cache.extractUserDataFromCache(request).id;
     try {
-        let resulte = await usersLogic.getCustomerStreetAdress(customerID);
+        const resulte = await usersLogic.getCustomerStreetAdress(customerID);
         response.json(resulte);
     }
     catch (error) {
@@ -50,9 +50,9 @@ server.get("/street", async (request, response, next) => {
     }
 });
 server.get("/city", async (request, response, next) => {
-    let customerID = cache.extractUserDataFromCache(request).id;
+    const customerID = cache.extractUserDataFromCache(request).id;
     try {
-        let resulte = await usersLogic.getCustomerCity(customerID);
+        const resulte = await usersLogic.getCustomerCity(customerID);
         response.json(resulte);
     }
     catch (error) {

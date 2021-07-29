@@ -1,9 +1,9 @@
 const connection = require("./connection-wrapper");
-let ErrorType = require("./../errors/error-type");
-let ServerError = require("./../errors/server-error");
+const ErrorType = require("./../errors/error-type");
+const ServerError = require("./../errors/server-error");
 
 async function login(user) {
-    let sql = `SELECT 
+    const sql = `SELECT 
                     *
                 FROM
                     supermarket.users
@@ -11,7 +11,7 @@ async function login(user) {
                     email = ?
                         AND password = ?;`
 
-    let parameters = [user.email, user.password];
+    const parameters = [user.email, user.password];
     let usersLoginResult;
     try {
         usersLoginResult = await connection.executeWithParameters(sql, parameters);
@@ -29,9 +29,9 @@ async function login(user) {
 }
 
 async function addUser(user) {
-    let sql = `INSERT INTO users (firstName, lastName, email, personalID, password, city, address, userType)
+    const sql = `INSERT INTO users (firstName, lastName, email, personalID, password, city, address, userType)
                     values(?,?,?,?,?,?,?,?);`;
-    let parameters = [user.firstName, user.lastName, user.email, user.id, user.password,
+    const parameters = [user.firstName, user.lastName, user.email, user.id, user.password,
     user.city, user.address, "customer"];
     try {
         await connection.executeWithParameters(sql, parameters);
@@ -42,10 +42,10 @@ async function addUser(user) {
 }
 
 async function isUserExistByEmail(email) {
-    let sql = "SELECT email FROM users where email = ? ";
-    let parameters = [email]
+    const sql = "SELECT email FROM users where email = ? ";
+    const parameters = [email]
     try {
-        let isUserNameExists = await connection.executeWithParameters(sql, parameters);
+        const isUserNameExists = await connection.executeWithParameters(sql, parameters);
         if (isUserNameExists == null || isUserNameExists.length == 0) {
             return false;
         }
@@ -59,13 +59,13 @@ async function isUserExistByEmail(email) {
 
 
 async function getCustomerCity(id) {
-    let sql = `SELECT 
+    const sql = `SELECT 
                     city
                 FROM
                     supermarket.users
                 WHERE
                     id = ?;`;
-    let parameters = [id];
+    const parameters = [id];
     try {
         return await connection.executeWithParameters(sql, parameters);
     }
@@ -75,13 +75,13 @@ async function getCustomerCity(id) {
 }
 
 async function getCustomerStreetAdress(id) {
-    let sql = `SELECT 
+    const sql = `SELECT 
                     address
                 FROM
                     supermarket.users
                 WHERE
                     id = ?;`;
-    let parameters = [id];
+    const parameters = [id];
     try {
         return await connection.executeWithParameters(sql, parameters);
     }

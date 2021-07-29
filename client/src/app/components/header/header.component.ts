@@ -11,8 +11,8 @@ import { UserService } from 'src/app/services/UserService';
 })
 export class HeaderComponent implements OnInit {
 
-  public searchText: string
-  public isMobile: boolean
+  public searchText: string;
+  public isMobile: boolean;
   constructor(public usersService: UserService, private productsService: ProductsService) {
     this.isMobile = false;
     this.searchText = "";
@@ -28,13 +28,12 @@ export class HeaderComponent implements OnInit {
   
   logout() {
     sessionStorage.clear();
-
   }
 
   search() {
     if (sessionStorage.getItem("isLoggedIn")) {
       this.productsService.selectedCategory = 999;
-      let observable = this.productsService.getProductByName(this.searchText);
+      const observable = this.productsService.getProductByName(this.searchText);
       observable.subscribe((response) => {
         this.productsService.products = response;
         this.searchText = "";

@@ -8,10 +8,10 @@ server.use(express.json());
 
 // POST http://localhost:3001/products
 server.post("/", async (request, response, next) => {
-    let userType = cache.extractUserDataFromCache(request).userType;
-    let newProductDetails = request.body;
+    const userType = cache.extractUserDataFromCache(request).userType;
+    const newProductDetails = request.body;
     try {
-        let res = await productsLogic.addNewProduct(userType, newProductDetails);
+        const res = await productsLogic.addNewProduct(userType, newProductDetails);
         response.json(res);
     }
     catch (error) {
@@ -21,8 +21,8 @@ server.post("/", async (request, response, next) => {
 
 // PUT http://localhost:3001/products
 server.put("/", async (request, response, next) => {
-    let userType = cache.extractUserDataFromCache(request).userType;
-    let product = request.body;
+    const userType = cache.extractUserDataFromCache(request).userType;
+    const product = request.body;
     try {
         await productsLogic.updateProduct(userType, product);
         response.json();
@@ -36,7 +36,7 @@ server.put("/", async (request, response, next) => {
 server.get("/", async (request, response, next) => {
 
     try {
-        let allProducts = await productsLogic.getAllProducts();
+        const allProducts = await productsLogic.getAllProducts();
         response.json(allProducts);
     }
     catch (error) {
@@ -48,7 +48,7 @@ server.get("/", async (request, response, next) => {
 server.get("/categories", async (request, response, next) => {
 
     try {
-        let categories = await productsLogic.getAllCategories();
+        const categories = await productsLogic.getAllCategories();
         response.json(categories);
     }
     catch (error) {
@@ -61,7 +61,7 @@ server.get("/categories", async (request, response, next) => {
 // GET http://localhost:3001/products/number
 server.get("/number", async (request, response, next) => {
     try {
-        let numberOfProducts = await productsLogic.getProductsNumber();
+        const numberOfProducts = await productsLogic.getProductsNumber();
         response.json(numberOfProducts);
     }
     catch (error) {
@@ -72,9 +72,9 @@ server.get("/number", async (request, response, next) => {
 
 // GET http://localhost:3001/products/categories/:id
 server.get("/categories/:id", async (request, response, next) => {
-    let id = request.params.id;
+    const id = request.params.id;
     try {
-        let allProductsByCategory = await productsLogic.getAllProductsByCategory(id);
+        const allProductsByCategory = await productsLogic.getAllProductsByCategory(id);
         response.json(allProductsByCategory);
     }
     catch (error) {
@@ -85,9 +85,9 @@ server.get("/categories/:id", async (request, response, next) => {
 
 // GET http://localhost:3001/products/:productName
 server.get("/:productName", async (request, response, next) => {
-    let productName = request.params.productName;
+    const productName = request.params.productName;
     try {
-        let products = await productsLogic.getProductByName(productName)
+        const products = await productsLogic.getProductByName(productName)
         response.json(products);
     }
     catch (error) {

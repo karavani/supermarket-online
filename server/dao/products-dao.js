@@ -1,10 +1,10 @@
 const connection = require("./connection-wrapper");
-let ErrorType = require("./../errors/error-type");
-let ServerError = require("./../errors/server-error");
+const ErrorType = require("./../errors/error-type");
+const ServerError = require("./../errors/server-error");
 
 async function getAllProductsByCategory(id) {
-    let sql = `SELECT * FROM products where categoryID = ?;`;
-    let parameters = [id];
+    const sql = `SELECT * FROM products where categoryID = ?;`;
+    const parameters = [id];
 
     try {
         return await connection.executeWithParameters(sql, parameters);
@@ -16,7 +16,7 @@ async function getAllProductsByCategory(id) {
 
 
 async function getAllProducts() {
-    let sql = `SELECT 
+    const sql = `SELECT 
                     productID,
                     productName,
                     p.categoryID,
@@ -36,12 +36,12 @@ async function getAllProducts() {
 }
 
 async function addNewProduct(newProductDetails) {
-    let sql = `INSERT INTO products (productName,categoryID, price, imageURL) values (?,?,?,?);`;
-    let parameters = [newProductDetails.productName, newProductDetails.categoryID, newProductDetails.price,
+    const sql = `INSERT INTO products (productName,categoryID, price, imageURL) values (?,?,?,?);`;
+    const parameters = [newProductDetails.productName, newProductDetails.categoryID, newProductDetails.price,
     newProductDetails.imageURL];
     try {
         await connection.executeWithParameters(sql, parameters);
-        let productId = await connection.execute("SELECT LAST_INSERT_ID() as id;");
+        const productId = await connection.execute("SELECT LAST_INSERT_ID() as id;");
         return productId[0].id;
     }
     catch (e) {
@@ -50,13 +50,13 @@ async function addNewProduct(newProductDetails) {
 };
 
 async function updateProduct(product) {
-    let sql = `UPDATE products set
+    const sql = `UPDATE products set
                     productName = ?, 
                     categoryID = ?,
                     price = ?,
                     imageURL = ?
                 WHERE productID = ?;`;
-    let parameters = [product.productName, product.categoryID, product.price,
+    const parameters = [product.productName, product.categoryID, product.price,
     product.imageURL, product.productID];
     try {
         await connection.executeWithParameters(sql, parameters);
@@ -68,7 +68,7 @@ async function updateProduct(product) {
 
 
 async function getAllCategories() {
-    let sql = `SELECT * from categories;`;
+    const sql = `SELECT * from categories;`;
     try {
         return await connection.execute(sql);
     }
@@ -78,7 +78,7 @@ async function getAllCategories() {
 }
 
 async function getProductsNumber() {
-    let sql = `SELECT COUNT(*) as productsNumber from products;`;
+    const sql = `SELECT COUNT(*) as productsNumber from products;`;
     try {
         return await connection.execute(sql);
     }
@@ -88,8 +88,8 @@ async function getProductsNumber() {
 }
 
 async function getProductByName(productName) {
-    let sql = `SELECT * FROM supermarket.products where LOWER(productName) LIKE ?;`;
-    let parameters = ["%" + productName + "%"];
+    const sql = `SELECT * FROM supermarket.products where LOWER(productName) LIKE ?;`;
+    const parameters = ["%" + productName + "%"];
 
     try {
         return await connection.executeWithParameters(sql, parameters);

@@ -1,4 +1,4 @@
-let errorHandler = (e, request, response, next) => {
+const errorHandler = (e, request, response, next) => {
     // e = my Server error --> IT HAS AN ENUM INSIDE (!!) called errorType
     if (e.name === 'UnauthorizedError') {
         // jwt authentication error

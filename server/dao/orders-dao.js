@@ -1,10 +1,10 @@
 const connection = require("./connection-wrapper");
-let ErrorType = require("./../errors/error-type");
-let ServerError = require("./../errors/server-error");
+const ErrorType = require("./../errors/error-type");
+const ServerError = require("./../errors/server-error");
 
 
 async function getOrdersNumber() {
-    let sql = `SELECT COUNT(*) as ordersNumber from orders;`;
+    const sql = `SELECT COUNT(*) as ordersNumber from orders;`;
     try {
         return await connection.execute(sql);
     }
@@ -16,9 +16,9 @@ async function getOrdersNumber() {
 
 
 async function addNewOrder(customerID, newOrderDetails) {
-    let sql = `INSERT INTO orders (customerID,cartID, totalPrice, cityToDeliver, addressToDeliver, dateToDeliver, orderDate, payment4LastDigits) values (?,?,?,?,?,?,?,?);`;
-    let dateToDeliver = newOrderDetails.dateToDeliver.split("T");
-    let parameters = [customerID, newOrderDetails.cartID, newOrderDetails.totalPrice, newOrderDetails.cityToDeliver, newOrderDetails.addressToDeliver,
+    const sql = `INSERT INTO orders (customerID,cartID, totalPrice, cityToDeliver, addressToDeliver, dateToDeliver, orderDate, payment4LastDigits) values (?,?,?,?,?,?,?,?);`;
+    const dateToDeliver = newOrderDetails.dateToDeliver.split("T");
+    const parameters = [customerID, newOrderDetails.cartID, newOrderDetails.totalPrice, newOrderDetails.cityToDeliver, newOrderDetails.addressToDeliver,
         dateToDeliver[0], new Date(), newOrderDetails.payment4LastDigits];
     try {
         await connection.executeWithParameters(sql, parameters);
@@ -29,13 +29,13 @@ async function addNewOrder(customerID, newOrderDetails) {
 };
 
 async function getOrderDateByCartID(cartID) {
-    let sql = `SELECT 
+    const sql = `SELECT 
                     orderDate AS lastPurchase
                 FROM
                     supermarket.orders
                 WHERE
                     cartID = ?;`;
-    let parameters = [cartID];
+    const parameters = [cartID];
     try {
         return await connection.executeWithParameters(sql, parameters);
     }
@@ -45,7 +45,7 @@ async function getOrderDateByCartID(cartID) {
 }
 
 async function getOrdersBusyDays() {
-    let sql = `SELECT
+    const sql = `SELECT
                     dateToDeliver
                 FROM
                     orders
@@ -61,13 +61,13 @@ async function getOrdersBusyDays() {
     }
 }
 async function isOrderInBusyDays(dateToDeliver) {
-    let sql = `SELECT 
+    const sql = `SELECT 
                     COUNT(*) AS amount
                 FROM
                     orders
                 WHERE
                     dateToDeliver = ?;`;
-    let parameters = [dateToDeliver]
+    const parameters = [dateToDeliver]
     try {
         return await connection.executeWithParameters(sql, parameters);
     }

@@ -1,7 +1,5 @@
 const mysql = require('mysql2');
 
-
-
 // Connection = קו תקשורת למסד הנתונים
 const connection = mysql.createConnection({
     host: "localhost", // Computer

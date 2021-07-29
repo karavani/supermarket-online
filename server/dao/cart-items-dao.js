@@ -1,11 +1,11 @@
 const connection = require("./connection-wrapper");
-let ErrorType = require("./../errors/error-type");
-let ServerError = require("./../errors/server-error");
+const ErrorType = require("./../errors/error-type");
+const ServerError = require("./../errors/server-error");
 
 
 async function addNewItemToCart(cartItem) {
-    let sql = `INSERT INTO cartitem (productID, quantity, totalPrice, cartID) VALUES (?,?,?,?);`;
-    let parameters = [cartItem.productID, cartItem.quantity, cartItem.totalPrice, cartItem.cartID];
+    const sql = `INSERT INTO cartitem (productID, quantity, totalPrice, cartID) VALUES (?,?,?,?);`;
+    const parameters = [cartItem.productID, cartItem.quantity, cartItem.totalPrice, cartItem.cartID];
     try {
         return await connection.executeWithParameters(sql, parameters);
     }
@@ -15,7 +15,7 @@ async function addNewItemToCart(cartItem) {
 };
 
 async function getCartItems(cartID) {
-    let sql = `SELECT 
+    const sql = `SELECT 
                     p.productName,
                     p.price,
                     p.imageURL,
@@ -29,7 +29,7 @@ async function getCartItems(cartID) {
                         JOIN
                     products p ON p.productID = c.productID
                     where cartID = ?;`;
-    let parameters = [cartID];
+    const parameters = [cartID];
     let cartItems;
     try {
         return cartItems = await connection.executeWithParameters(sql, parameters);
@@ -40,12 +40,12 @@ async function getCartItems(cartID) {
 };
 
 async function updateItemQuantity(cartItem) {
-    let sql = `UPDATE cartitem 
+    const sql = `UPDATE cartitem 
                     SET 
                         quantity = ?
                     WHERE
                         itemID = ?;`;
-    let parameters = [cartItem.quantity, cartItem.itemID];
+    const parameters = [cartItem.quantity, cartItem.itemID];
     try {
         return await connection.executeWithParameters(sql, parameters);
     }
@@ -55,10 +55,10 @@ async function updateItemQuantity(cartItem) {
 };
 
 async function deleteItem(itemID) {
-    let sql = `DELETE FROM cartitem 
+    const sql = `DELETE FROM cartitem 
                WHERE
                    itemID = ?;`;
-    let parameters = [itemID];
+    const parameters = [itemID];
     try {
         return await connection.executeWithParameters(sql, parameters);
     }

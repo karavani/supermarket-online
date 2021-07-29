@@ -24,24 +24,24 @@ export class ProductsService {
         this.isManagedMod
     }
     public getAllCategories(): Observable<Category[]> {
-        return this.http.get<Category[]>("http://localhost:3001/products/categories");
+        return this.http.get<Category[]>("http://localhost:4200/products/categories");
     }
     public getAllProducts(): Observable<Product[]> {
-        return this.http.get<Product[]>("http://localhost:3001/products");
+        return this.http.get<Product[]>("http://localhost:4200/products");
     }
     public getAllProductsByCategory(categoryID: number): Observable<Product[]> {
-        return this.http.get<Product[]>("http://localhost:3001/products/categories/" + categoryID);
+        return this.http.get<Product[]>("http://localhost:4200/products/categories/" + categoryID);
     }
     public getProductByName(searchText: string) {
-        return this.http.get<Product[]>("http://localhost:3001/products/" + searchText);
+        return this.http.get<Product[]>("http://localhost:4200/products/" + searchText);
     }
     public getAllProductsNumber() {
-        return this.http.get("http://localhost:3001/products/number");
+        return this.http.get("http://localhost:4200/products/number");
     }
     public addNewProduct(product: Product) {
-        return this.http.post("http://localhost:3001/products/", product);
+        return this.http.post("http://localhost:4200/products/", product);
     }
     public updateProduct(product: Product) {
-        return this.http.put("http://localhost:3001/products/", product);
+        return this.http.put("http://localhost:4200/products/", product);
     }
 }

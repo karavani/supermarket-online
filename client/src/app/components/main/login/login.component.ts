@@ -104,7 +104,7 @@ export class LoginComponent implements OnInit {
 
     public getCartStatus() {
         if (sessionStorage.getItem("isLoggedIn") == "true" && sessionStorage.getItem("userType") == "customer") {
-            let observable = this.cartsService.getCartStatus()
+            const observable = this.cartsService.getCartStatus()
             observable.subscribe(response => {
                 console.log(response);
                 if (response[0].status == 1) {
@@ -123,7 +123,7 @@ export class LoginComponent implements OnInit {
 
     public startShopping() {
         if (this.startShoppingButtonValue == "start shopping") {
-            let observable = this.cartsService.creatNewCart();
+            const observable = this.cartsService.creatNewCart();
             observable.subscribe(response => {
                 this.cartsService.cartID = response;
                 sessionStorage.setItem("cartID", response.toString());

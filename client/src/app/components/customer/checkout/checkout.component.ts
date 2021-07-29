@@ -51,7 +51,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   onDblGetCity() {
-    let observable = this.userService.getCustomerCityAddress();
+    const observable = this.userService.getCustomerCityAddress();
     observable.subscribe((response: string) => {
       this.orderFormGroup.get("city").setValue(response);
     }, error => {
@@ -60,7 +60,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   onDblGetStreet() {
-    let observable = this.userService.getCustomerStreetAddress();
+    const observable = this.userService.getCustomerStreetAddress();
     observable.subscribe(response => {
       this.orderFormGroup.get("street").setValue(response);
     }, error => {
@@ -69,7 +69,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   receieptContent() {
-    let payment4LastDigits = this.creditCard.value.toString().slice(-4).toString();
+    const payment4LastDigits = this.creditCard.value.toString().slice(-4).toString();
     let string = this.city.value + "\n" +
       this.street.value +
       "\n  " + this.deliveryDate.value + "\n" + "------------------------------------------------\n" +
@@ -83,7 +83,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   getOrdersBusyDays() {
-    let observable = this.ordersService.getOrdersBusyDays();
+    const observable = this.ordersService.getOrdersBusyDays();
     observable.subscribe((response: any) => {
       response.forEach((index: any) => {
         this.myBusyDays.push(new Date(index.dateToDeliver));
@@ -100,13 +100,13 @@ export class CheckoutComponent implements OnInit {
   }
 
   order() {
-    let deliveryDate = this.deliveryDate.value;
+    const deliveryDate = this.deliveryDate.value;
     const blob = new Blob([this.receieptContent()], { type: 'text/plain' });
     this.url = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(blob));
-    let payment4LastDigits = this.creditCard.value.toString().slice(-4);
-    let order = new OrderDetails(parseInt(sessionStorage.getItem("cartID")), this.cartItemsService.totalPrice,
+    const payment4LastDigits = this.creditCard.value.toString().slice(-4);
+    const order = new OrderDetails(parseInt(sessionStorage.getItem("cartID")), this.cartItemsService.totalPrice,
       this.city.value, this.street.value, new Date(deliveryDate.getTime() - deliveryDate.getTimezoneOffset() * 60000), payment4LastDigits);
-    let observable = this.ordersService.addNewOrder(order)
+    const observable = this.ordersService.addNewOrder(order)
     observable.subscribe(() => {
       this.modal.nativeElement.style.display = 'block';
       this.initCart();
@@ -117,7 +117,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   initCart() {
-    let observable = this.cartsService.creatNewCart();
+    const observable = this.cartsService.creatNewCart();
     observable.subscribe((response: number) => {
       sessionStorage.removeItem("cartID");
       this.cartItemsService.cartItemsMap = new Map();

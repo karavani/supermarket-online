@@ -21,8 +21,8 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.initCartBtn();
     this.cartItemsService.totalPrice = 0;
-    let cartID = parseInt(sessionStorage.getItem("cartID"));
-    let observable = this.cartItemsService.getCartItems(cartID);
+    const cartID = parseInt(sessionStorage.getItem("cartID"));
+    const observable = this.cartItemsService.getCartItems(cartID);
     observable.subscribe(response => {
       response.forEach(item => {
         this.cartItemsService.cartItemsMap.set(item.productID, item);
@@ -55,9 +55,9 @@ export class CartComponent implements OnInit {
   }
 
   deleteItem(itemID: number, productID: number) {
-    let observable = this.cartItemsService.deleteItemFromCart(itemID);
+    const observable = this.cartItemsService.deleteItemFromCart(itemID);
     observable.subscribe(() => {
-      let item = this.cartItemsService.cartItemsMap.get(productID);
+      const item = this.cartItemsService.cartItemsMap.get(productID);
       this.cartItemsService.totalPrice -= item.totalPrice;
       this.cartItemsService.cartItemsMap.delete(productID);
     }, error => {
@@ -73,8 +73,8 @@ export class CartComponent implements OnInit {
   }
 
   deleteAllCartItems() {
-    let cartID = parseInt(sessionStorage.getItem("cartID"));
-    let observable = this.cartsService.deleteAllCartItems(cartID);
+    const cartID = parseInt(sessionStorage.getItem("cartID"));
+    const observable = this.cartsService.deleteAllCartItems(cartID);
     observable.subscribe(() => {
       this.cartItemsService.totalPrice = 0;
       this.cartItemsService.cartItemsMap = new Map();

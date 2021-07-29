@@ -1,8 +1,8 @@
 const usersDao = require('../dao/users-dao');
 const cartsLogic = require('../logic/carts-logic');
 
-let ServerError = require("../errors/server-error");
-let ErrorType = require("../errors/error-type");
+const ServerError = require("../errors/server-error");
+const ErrorType = require("../errors/error-type");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const config = require("../config.json");
@@ -29,7 +29,7 @@ async function addUser(user) {
 
 function isValidEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    let response = re.test(String(email).toLowerCase());
+    const response = re.test(String(email).toLowerCase());
     return response;
 }
 
@@ -37,25 +37,25 @@ function isValidEmail(email) {
 async function login(user) {
     
     user.password = crypto.createHash("md5").update(saltLeft + user.password + saltRight).digest("hex");
-    let userData = await usersDao.login(user);
+    const userData = await usersDao.login(user);
     const token = jwt.sign({ sub: saltLeft + userData.userName + saltRight }, config.secret)
     cache.put(token, userData);
     if (userData.userType == 'customer') {
-        let cart = await cartsLogic.getCartStatus(userData.id);
-        let response = { token: "Bearer " + token, userType: userData.userType, name: userData.firstName, cart }
+        const cart = await cartsLogic.getCartStatus(userData.id);
+        const response = { token: "Bearer " + token, userType: userData.userType, name: userData.firstName, cart }
         return response;
     }
-    let response = { token: "Bearer " + token, userType: userData.userType }
+    const response = { token: "Bearer " + token, userType: userData.userType }
     return response;
 }
 
 async function getCustomerCity(id){
-    let response = await usersDao.getCustomerCity(id);
+    const response = await usersDao.getCustomerCity(id);
     return response[0].city;
 }
 
 async function getCustomerStreetAdress(id){
-    let response = await usersDao.getCustomerStreetAdress(id);
+    const response = await usersDao.getCustomerStreetAdress(id);
     return response[0].address;
 }
 

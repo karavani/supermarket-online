@@ -22,18 +22,18 @@ export class UserService {
     public login(userLoginDetails: UserLoginDetails): Observable<SuccessfulLoginServerResponse> {
 
         //  The http request will be sent after the subscribe() method will be called
-        return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users/login", userLoginDetails);
+        return this.http.post<SuccessfulLoginServerResponse>("http://localhost:4200/users/login", userLoginDetails);
     }
 
     public createUser(UserRegisterDetails: UserRegisterDetails): Observable<SuccessfulLoginServerResponse> {
-        return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users", UserRegisterDetails);
+        return this.http.post<SuccessfulLoginServerResponse>("http://localhost:4200/users", UserRegisterDetails);
     }
 
     public getCustomerCityAddress() {
-        return this.http.get("http://localhost:3001/users/city");
+        return this.http.get("http://localhost:4200/users/city");
     }
     public getCustomerStreetAddress() {
-        return this.http.get("http://localhost:3001/users/street");
+        return this.http.get("http://localhost:4200/users/street");
     }
 
 }

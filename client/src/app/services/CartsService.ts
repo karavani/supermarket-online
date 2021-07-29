@@ -19,13 +19,13 @@ export class CartsService {
         this.isInOrder = false;
     }
     public creatNewCart(): Observable<number> {
-        return this.http.post<number>("http://localhost:3001/carts", null);
+        return this.http.post<number>("http://localhost:4200/carts", null);
     }
     public deleteAllCartItems(cartID: number) {
-        return this.http.delete("http://localhost:3001/carts/" + cartID);
+        return this.http.delete("http://localhost:4200/carts/" + cartID);
     }
     public getCartStatus() {
-        return this.http.get<CartStatus>("http://localhost:3001/carts/");
+        return this.http.get<CartStatus>("http://localhost:4200/carts/");
     }
 
 }

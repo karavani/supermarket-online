@@ -6,9 +6,9 @@ server.use(express.json());
 
 server.post("/", async (request, response, next) => {
 
-    let newCartItem = request.body;
+    const newCartItem = request.body;
     try {
-        let itemID = await cartItemsLogic.addNewItemToCart(newCartItem);
+        const itemID = await cartItemsLogic.addNewItemToCart(newCartItem);
         response.json(itemID.insertId);
     }
     catch (error) {
@@ -18,9 +18,9 @@ server.post("/", async (request, response, next) => {
 
 server.get("/:id", async (request, response, next) => {
 
-    let cartID = request.params.id;
+    const cartID = request.params.id;
     try {
-        let cartItems = await cartItemsLogic.getCartItems(cartID);
+        const cartItems = await cartItemsLogic.getCartItems(cartID);
         response.json(cartItems);
     }
     catch (error) {
@@ -30,7 +30,7 @@ server.get("/:id", async (request, response, next) => {
 
 server.put("/", async (request, response, next) => {
 
-    let cartItem = request.body;
+    const cartItem = request.body;
     try {
         await cartItemsLogic.updateItemQuantity(cartItem);
         response.json();
@@ -42,7 +42,7 @@ server.put("/", async (request, response, next) => {
 
 server.delete("/:id", async (request, response, next) => {
 
-    let itemID = request.params.id;
+    const itemID = request.params.id;
     try {
         await cartItemsLogic.deleteItem(itemID);
         response.json();

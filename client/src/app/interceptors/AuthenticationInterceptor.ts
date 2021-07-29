@@ -11,9 +11,9 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add authorization header with our token if available
-        let token:string;
+        let token: string;
         token = sessionStorage.getItem("token");
-        if (token) {            
+        if (token) {
             request = request.clone({
                 setHeaders: {
                     Authorization: token

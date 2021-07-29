@@ -17,7 +17,7 @@ export class AdminComponent implements OnInit {
     this.getAllCategories();
   }
   getProductsByCategory(categoryID: number) {
-    let observable = this.productsService.getAllProductsByCategory(categoryID);
+    const observable = this.productsService.getAllProductsByCategory(categoryID);
     observable.subscribe(response => {
       this.productsService.selectedCategory = categoryID;
       this.productsService.products = response;
@@ -26,7 +26,7 @@ export class AdminComponent implements OnInit {
     });
   }
   getAllCategories() {
-    let observable = this.productsService.getAllCategories();
+    const observable = this.productsService.getAllCategories();
     observable.subscribe(response => {
       this.productsService.categories = response;
     }, error => {
@@ -38,7 +38,7 @@ export class AdminComponent implements OnInit {
     this.productsService.product = Object.assign(new Product, product);
   }
   getAllProducts() {
-    let observable = this.productsService.getAllProducts();
+    const observable = this.productsService.getAllProducts();
     observable.subscribe(response => {
       this.productsService.selectedCategory = 0;
       this.productsService.products = response;

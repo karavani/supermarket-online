@@ -9,9 +9,9 @@ server.use(express.json());
 
 server.post("/", async (request, response, next) => {
 
-    let customerID = cache.extractUserDataFromCache(request).id;
+    const customerID = cache.extractUserDataFromCache(request).id;
 
-    let newOrderDetails = request.body;
+    const newOrderDetails = request.body;
     try {
         await ordersLogic.addNewOrder(customerID, newOrderDetails);
         response.json();
@@ -25,7 +25,7 @@ server.post("/", async (request, response, next) => {
 server.get("/number", async (request, response, next) => {
 
     try {
-        let numberOfOrders = await ordersLogic.getOrdersNumber();
+        const numberOfOrders = await ordersLogic.getOrdersNumber();
         response.json(numberOfOrders);
     }
     catch (error) {
@@ -37,7 +37,7 @@ server.get("/number", async (request, response, next) => {
 server.get("/", async (request, response, next) => {
     //  Three Orders limited Per Day = busy Day
     try {
-        let busyDays = await ordersLogic.getOrdersBusyDays();
+        const busyDays = await ordersLogic.getOrdersBusyDays();
         response.json(busyDays);
     }
     catch (error) {

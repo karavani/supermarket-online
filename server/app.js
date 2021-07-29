@@ -11,9 +11,10 @@ const errorHandler = require("./errors/error-handler");
 const loginFilter = require('./middleware/login-filter');
 const server = express();
 
-// Extract the JSON from the body and create request.body object containing it: 
 server.use(express.json());
-server.use(cors({ origin: ["http://localhost:4200"] }));
+server.use(express.static('public'));
+
+server.use(cors());
 
 server.use(loginFilter());
 server.use("/users", usersController);
@@ -23,10 +24,7 @@ server.use("/carts", cartsController);
 server.use("/cart-items", cartItemsController);
 
 
-
-
-
 server.use(errorHandler);
-server.listen(3001, () => console.log("Listening on http://localhost:3001"));
+server.listen(4200, () => console.log("Listening on http://localhost:4200"));
 
 

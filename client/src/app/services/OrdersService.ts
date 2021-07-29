@@ -13,13 +13,13 @@ export class OrdersService {
     constructor(private http: HttpClient) {
     }
     public getAllOrdersNumber() {
-        return this.http.get("http://localhost:3001/orders/number");
+        return this.http.get("http://localhost:4200/orders/number");
     }
     public getOrdersBusyDays() {
-        return this.http.get("http://localhost:3001/orders");
+        return this.http.get("http://localhost:4200/orders");
     }
     public addNewOrder(order: OrderDetails){
-        return this.http.post("http://localhost:3001/orders", order);
+        return this.http.post("http://localhost:4200/orders", order);
 
     }
 

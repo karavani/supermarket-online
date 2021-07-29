@@ -1,11 +1,11 @@
 const connection = require("./connection-wrapper");
-let ErrorType = require("./../errors/error-type");
-let ServerError = require("./../errors/server-error");
+const ErrorType = require("./../errors/error-type");
+const ServerError = require("./../errors/server-error");
 
 
 async function creatNewCart(customerID) {
-    let sql = `INSERT INTO supermarket.cart (dateOfCreation, customerID) VALUES (?, ?);`;
-    let parameters = [new Date(), customerID];
+    const sql = `INSERT INTO supermarket.cart (dateOfCreation, customerID) VALUES (?, ?);`;
+    const parameters = [new Date(), customerID];
     let cartID;
     try {
         return cartID = await connection.executeWithParameters(sql, parameters);
@@ -16,7 +16,7 @@ async function creatNewCart(customerID) {
 };
 
 async function getCartStatus(customerID) {
-    let sql = `SELECT 
+    const sql = `SELECT 
                    cartID, dateOfCreation, status
                 FROM
                     supermarket.cart
@@ -24,7 +24,7 @@ async function getCartStatus(customerID) {
                     customerID = ?
                 ORDER BY dateOfCreation DESC
                 LIMIT 1;`;
-    let parameters = [customerID];
+    const parameters = [customerID];
     let cartStatus;
     try {
         return cartStatus = await connection.executeWithParameters(sql, parameters);
@@ -35,8 +35,8 @@ async function getCartStatus(customerID) {
 };
 
 async function getCartStatusForCartID(cartID) {
-    let sql = `SELECT status, dateOfCreation FROM supermarket.cart where cartID = ?;`;
-    let parameters = [cartID];
+    const sql = `SELECT status, dateOfCreation FROM supermarket.cart where cartID = ?;`;
+    const parameters = [cartID];
     let cartStatus;
     try {
         return cartStatus = await connection.executeWithParameters(sql, parameters);
@@ -47,10 +47,10 @@ async function getCartStatusForCartID(cartID) {
 };
 
 async function deleteAllCartItems(cartID) {
-    let sql = `DELETE FROM supermarket.cartitem 
+    const sql = `DELETE FROM supermarket.cartitem 
                WHERE
                    cartID = ?;`;
-    let parameters = [cartID];
+    const parameters = [cartID];
     try {
         return await connection.executeWithParameters(sql, parameters);
     }
@@ -60,11 +60,11 @@ async function deleteAllCartItems(cartID) {
 };
 
 async function updateCartStatus(cartID) {
-    let sql = `UPDATE supermarket.cart
+    const sql = `UPDATE supermarket.cart
                 SET status = 1
                WHERE
                    cartID = ?;`;
-    let parameters = [cartID];
+    const parameters = [cartID];
     try {
         return await connection.executeWithParameters(sql, parameters);
     }
